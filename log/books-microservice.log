@@ -1,0 +1,8 @@
+[2018-05-20 04:11:07] books-microservice.INFO: Book Created! {"id":null,"name":"Eram os Deuses Astronautas","author":"Erich Von Dâniken"} []
+[2018-05-20 04:12:52] books-microservice.WARNING: Book 3 Not Found [] []
+[2018-05-20 04:20:34] books-microservice.INFO: Book Created! {"id":null,"name":"Eram os Deuses Astronautas","author":"Erich Von Dâniken"} []
+[2018-05-20 04:20:43] books-microservice.INFO: Book Created! {"id":null,"name":"Eram os Deuses Astronautas","author":"Erich Von Dâniken"} []
+[2018-05-20 04:20:44] books-microservice.INFO: Book Created! {"id":null,"name":"Eram os Deuses Astronautas","author":"Erich Von Dâniken"} []
+[2018-05-20 04:20:45] books-microservice.INFO: Book Created! {"id":null,"name":"Eram os Deuses Astronautas","author":"Erich Von Dâniken"} []
+[2018-05-20 04:22:28] books-microservice.INFO: Book Created! {"id":null,"name":"Eram os Deuses Astronautas","author":"Erich Von Dâniken"} []
+[2018-05-20 16:57:23] books-microservice.INFO: Book Created! {"id":null,"name":"Eram os Deuses Astronautas 2222","author":"Erich Von Dâniken"} []
