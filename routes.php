@@ -6,18 +6,18 @@
 $app->group('/v1', function() {
 
     /**
-     * Dentro de v1, o recurso /book
+     * Dentro de v1, o recurso /colors
      */
-    $this->group('/book', function() {
-        $this->get('', '\App\v1\Controllers\BookController:listBook');
-        $this->post('', '\App\v1\Controllers\BookController:createBook');
+    $this->group('/colors', function() {
+        $this->get('', '\App\v1\Controllers\ColorController:listColor');
+        $this->post('', '\App\v1\Controllers\ColorController:createColor');
         
         /**
          * Validando se tem um integer no final da URL
          */
-        $this->get('/{id:[0-9]+}', '\App\v1\Controllers\BookController:viewBook');
-        $this->put('/{id:[0-9]+}', '\App\v1\Controllers\BookController:updateBook');
-        $this->delete('/{id:[0-9]+}', '\App\v1\Controllers\BookController:deleteBook');
+        $this->get('/{id:[0-9]+}', '\App\v1\Controllers\ColorController:viewColor');
+        $this->put('/{id:[0-9]+}', '\App\v1\Controllers\ColorController:updateColor');
+        $this->delete('/{id:[0-9]+}', '\App\v1\Controllers\ColorController:deleteColor');
     });
 
     /**

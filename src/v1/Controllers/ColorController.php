@@ -4,12 +4,12 @@ namespace App\v1\Controllers;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-use App\Models\Entity\Book;
+use App\Models\Entity\Color;
 
 /**
  * Controller v1 de livros
  */
-class BookController {
+class ColorController {
 
     /**
      * Container Class
@@ -26,29 +26,29 @@ class BookController {
     }
     
     /**
-     * Listagem de Livros
+     * Listagem de Cores
      * @param [type] $request
      * @param [type] $response
      * @param [type] $args
      * @return Response
      */
-    public function listBook($request, $response, $args) {
+    public function listColor($request, $response, $args) {
         $entityManager = $this->container->get('em');
-        $booksRepository = $entityManager->getRepository('App\Models\Entity\Book');
-        $books = $booksRepository->findAll();
-        $return = $response->withJson($books, 200)
+        $colorsRepository = $entityManager->getRepository('App\Models\Entity\Color');
+        $colors = $colorsRepository->findAll();
+        $return = $response->withJson($colors, 200)
             ->withHeader('Content-type', 'application/json');
         return $return;        
     }
     
     /**
-     * Cria um livro
+     * Cria uma cor
      * @param [type] $request
      * @param [type] $response
      * @param [type] $args
      * @return Response
      */
-    public function createBook($request, $response, $args) {
+    public function createColor($request, $response, $args) {
         $params = (object) $request->getParams();
         /**
          * Pega o Entity Manager do nosso Container
@@ -57,133 +57,134 @@ class BookController {
         /**
          * Instância da nossa Entidade preenchida com nossos parametros do post
          */
-        $book = (new Book())->setName($params->name)
-            ->setAuthor($params->author);
+        $color = (new Color())->setName($params->name)
+            ->setHexadecimal($params->hexadecimal);
         
         /**
-         * Registra a criação do livro
+         * Registra a criação da cor
          */
         $logger = $this->container->get('logger');
-        $logger->info('Book Created!', $book->getValues());
+        $logger->info('Color Created!', $color->getValues());
 
         /**
          * Persiste a entidade no banco de dados
          */
-        $entityManager->persist($book);
+        $entityManager->persist($color);
         $entityManager->flush();
-        $return = $response->withJson($book, 201)
+        $return = $response->withJson($color, 201)
             ->withHeader('Content-type', 'application/json');
-        return $return;       
+        return $return;
     }
 
     /**
-     * Exibe as informações de um livro 
+     * Exibe as informações de uma cor 
      * @param [type] $request
      * @param [type] $response
      * @param [type] $args
      * @return Response
      */
-    public function viewBook($request, $response, $args) {
+    public function viewColor($request, $response, $args) {
 
         $id = (int) $args['id'];
 
         $entityManager = $this->container->get('em');
-        $booksRepository = $entityManager->getRepository('App\Models\Entity\Book');
-        $book = $booksRepository->find($id); 
+        $colorsRepository = $entityManager->getRepository('App\Models\Entity\Color');
+        $color = $colorsRepository->find($id); 
 
         /**
-         * Verifica se existe um livro com a ID informada
+         * Verifica se existe uma cor com a ID informada
          */
-        if (!$book) {
+        if (!$color) {
             $logger = $this->container->get('logger');
-            $logger->warning("Book {$id} Not Found");
-            throw new \Exception("Book not Found", 404);
+            $logger->warning("Color {$id} Not Found");
+            throw new \Exception("Color not Found", 404);
         }    
 
-        $return = $response->withJson($book, 200)
+        $return = $response->withJson($color, 200)
             ->withHeader('Content-type', 'application/json');
         return $return;   
     }
 
     /**
-     * Atualiza um Livro
+     * Atualiza uma cor
      * @param [type] $request
      * @param [type] $response
      * @param [type] $args
      * @return Response
      */
-    public function updateBook($request, $response, $args) {
+    public function updateColor($request, $response, $args) {
 
         $id = (int) $args['id'];
 
         /**
-         * Encontra o Livro no Banco
+         * Encontra a cor no Banco
          */ 
         $entityManager = $this->container->get('em');
-        $booksRepository = $entityManager->getRepository('App\Models\Entity\Book');
-        $book = $booksRepository->find($id);   
+        $colorsRepository = $entityManager->getRepository('App\Models\Entity\Color');
+        $color = $colorsRepository->find($id);   
 
         /**
-         * Verifica se existe um livro com a ID informada
+         * Verifica se existe uma cor com a ID informada
          */
-        if (!$book) {
+        if (!$color) {
             $logger = $this->container->get('logger');
-            $logger->warning("Book {$id} Not Found");
-            throw new \Exception("Book not Found", 404);
+            $logger->warning("Color {$id} Not Found");
+            throw new \Exception("Color not Found", 404);
         }  
 
         /**
-         * Atualiza e Persiste o Livro com os parâmetros recebidos no request
+         * Atualiza e Persiste a cor com os parâmetros recebidos no request
          */
-        $book->setName($request->getParam('name'))
-            ->setAuthor($request->getParam('author'));
+        $color->setName($request->getParam('name'))
+            ->setHexadecimal($request->getParam('hexadecimal'));
 
         /**
          * Persiste a entidade no banco de dados
          */
-        $entityManager->persist($book);
+        $entityManager->persist($color);
         $entityManager->flush();        
         
-        $return = $response->withJson($book, 200)
+        $return = $response->withJson($color, 200)
             ->withHeader('Content-type', 'application/json');
-        return $return;       
+        return $return;
     }
 
     /**
-     * Deleta um Livro
+     * Deleta uma cor
      * @param [type] $request
      * @param [type] $response
      * @param [type] $args
      * @return Response
      */
-    public function deleteBook($request, $response, $args) {
+    public function deleteColor($request, $response, $args) {
 
         $id = (int) $args['id'];
 
         /**
-         * Encontra o Livro no Banco
+         * Encontra a cor no Banco
          */ 
         $entityManager = $this->container->get('em');
-        $booksRepository = $entityManager->getRepository('App\Models\Entity\Book');
-        $book = $booksRepository->find($id);   
+        $colorsRepository = $entityManager->getRepository('App\Models\Entity\Color');
+        $color = $colorsRepository->find($id);   
 
         /**
          * Verifica se existe um livro com a ID informada
          */
-        if (!$book) {
+        if (!$color) {
             $logger = $this->container->get('logger');
-            $logger->warning("Book {$id} Not Found");
-            throw new \Exception("Book not Found", 404);
-        }  
+            $logger->warning("Color {$id} Not Found");
+            throw new \Exception("Color not Found", 404);
+        }
 
         /**
          * Remove a entidade
          */
-        $entityManager->remove($book);
-        $entityManager->flush(); 
-        $return = $response->withJson(['msg' => "Deletando o livro {$id}"], 204)
+        $entityManager->remove($color);
+        $entityManager->flush();
+
+        $return = $response->withJson(['msg' => "Deleting the color {$id}"], 204)
             ->withHeader('Content-type', 'application/json');
-        return $return;    
+        return $return;
     }
     
 }
