@@ -88,10 +88,20 @@ $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/src/Model
 /**
  * Array de configurações da nossa conexão com o banco
  */
+/*
 $conn = array(
     'driver' => 'pdo_sqlite',
     'path' => __DIR__ . '/db.sqlite',
 );
+*/
+$conn = array(
+    'dbname' => 'vitrinepro',
+    'user' => 'vitrinepro',
+    'password' => '.Jacarta127280',
+    'host' => 'vitrinepro.cyur6u9cx6vc.sa-east-1.rds.amazonaws.com',
+    'driver' => 'pdo_mysql',
+);
+
 
 /**
  * Instância do Entity Manager
