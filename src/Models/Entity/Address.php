@@ -2,73 +2,80 @@
 
 
 
-use Doctrine\ORM\Mapping as ORM;
+namespace App\Models\Entity;
 
 /**
  * Address
  *
- * @ORM\Table(name="address")
- * @ORM\Entity
+ * @Table(name="address")
+ * @Entity
  */
 class Address
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Column(name="id", type="integer", nullable=false)
+     * @Id
+     * @GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    public $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="street", type="string", length=500, nullable=true)
+     * @Column(name="street", type="string", length=500, nullable=true)
      */
-    private $street;
+    public $street;
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="number", type="boolean", nullable=true)
+     * @Column(name="number", type="boolean", nullable=true)
      */
-    private $number;
+    public $number;
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="zip", type="boolean", nullable=true)
+     * @Column(name="zip", type="boolean", nullable=true)
      */
-    private $zip;
+    public $zip;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="register", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     * @Column(name="register", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $register = 'CURRENT_TIMESTAMP';
+    public $register = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="exclusion", type="datetime", nullable=true)
+     * @Column(name="exclusion", type="datetime", nullable=true)
      */
-    private $exclusion;
+    public $exclusion;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="city", type="string", length=255, nullable=true)
+     * @Column(name="city", type="string", length=255, nullable=true)
      */
-    private $city;
+    public $city;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="phone", type="string", length=45, nullable=true)
+     * @Column(name="phone", type="string", length=45, nullable=true)
      */
-    private $phone;
+    public $phone;
+
+    /**
+     * @var string|null
+     *
+     * @Column(name="uf", type="string", length=2, nullable=true)
+     */
+    public $uf;
 
 
 }

@@ -2,45 +2,45 @@
 
 
 
-use Doctrine\ORM\Mapping as ORM;
+namespace App\Models\Entity;
 
 /**
  * Currency
  *
- * @ORM\Table(name="currency")
- * @ORM\Entity
+ * @Table(name="currency")
+ * @Entity
  */
 class Currency
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Column(name="id", type="integer", nullable=false)
+     * @Id
+     * @GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    public $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     * @Column(name="name", type="string", length=255, nullable=true)
      */
-    private $name;
+    public $name;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="register", type="datetime", nullable=true)
+     * @Column(name="register", type="datetime", nullable=true)
      */
-    private $register;
+    public $register;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="exclusion", type="datetime", nullable=true)
+     * @Column(name="exclusion", type="datetime", nullable=true)
      */
-    private $exclusion;
+    public $exclusion;
 
 
 }

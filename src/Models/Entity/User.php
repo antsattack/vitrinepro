@@ -2,86 +2,92 @@
 
 
 
-use Doctrine\ORM\Mapping as ORM;
+namespace App\Models\Entity;
 
 /**
  * User
  *
- * @ORM\Table(name="user", indexes={@ORM\Index(name="fk_user_address1_idx", columns={"address_payment_id"}), @ORM\Index(name="fk_user_address2_idx", columns={"address_shipping_id"})})
- * @ORM\Entity
+ * @Table(name="user", indexes={@Index(name="fk_user_address1_idx", columns={"address_payment_id"}), @Index(name="fk_user_address2_idx", columns={"address_shipping_id"})})
+ * @Entity
  */
 class User
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Column(name="id", type="integer", nullable=false)
+     * @Id
+     * @GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    public $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     * @Column(name="name", type="string", length=255, nullable=true)
      */
-    private $name;
+    public $name;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="description", type="text", length=65535, nullable=true)
+     * @Column(name="description", type="text", length=65535, nullable=true)
      */
-    private $description;
+    public $description;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="register", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     * @Column(name="register", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $register = 'CURRENT_TIMESTAMP';
+    public $register = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="exclusion", type="datetime", nullable=true)
+     * @Column(name="exclusion", type="datetime", nullable=true)
      */
-    private $exclusion;
+    public $exclusion;
 
     /**
-     * @var \Address
+     * @var \App\Models\Entity\Address
      *
-     * @ORM\ManyToOne(targetEntity="Address")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="address_payment_id", referencedColumnName="id")
+     * @ManyToOne(targetEntity="App\Models\Entity\Address")
+     * @JoinColumns({
+     *   @JoinColumn(name="address_payment_id", referencedColumnName="id")
      * })
      */
-    private $addressPayment;
+    public $addressPayment;
 
     /**
-     * @var \Address
+     * @var \App\Models\Entity\Address
      *
-     * @ORM\ManyToOne(targetEntity="Address")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="address_shipping_id", referencedColumnName="id")
+     * @ManyToOne(targetEntity="App\Models\Entity\Address")
+     * @JoinColumns({
+     *   @JoinColumn(name="address_shipping_id", referencedColumnName="id")
      * })
      */
-    private $addressShipping;
+    public $addressShipping;
+
+
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * Get the value of id
      *
-     * @ORM\ManyToMany(targetEntity="Product", mappedBy="user")
-     */
-    private $product;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
+     * @return  int
+     */ 
+    public function getId()
     {
-        $this->product = new \Doctrine\Common\Collections\ArrayCollection();
+        return $this->id;
     }
 
+    /**
+     * Get the value of name
+     *
+     * @return  string|null
+     */ 
+    public function getName()
+    {
+        return $this->name;
+    }
 }

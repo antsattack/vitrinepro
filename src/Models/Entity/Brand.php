@@ -2,45 +2,45 @@
 
 
 
-use Doctrine\ORM\Mapping as ORM;
+namespace App\Models\Entity;
 
 /**
  * Brand
  *
- * @ORM\Table(name="brand")
- * @ORM\Entity
+ * @Table(name="brand")
+ * @Entity
  */
 class Brand
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Column(name="id", type="integer", nullable=false)
+     * @Id
+     * @GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    public $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="name", type="string", length=45, nullable=true)
+     * @Column(name="name", type="string", length=45, nullable=true)
      */
-    private $name;
+    public $name;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="register", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     * @Column(name="register", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $register = 'CURRENT_TIMESTAMP';
+    public $register = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="exclusion", type="datetime", nullable=true)
+     * @Column(name="exclusion", type="datetime", nullable=true)
      */
-    private $exclusion;
+    public $exclusion;
 
 
 }

@@ -6,14 +6,16 @@ namespace App\Models\Entity;
 /**
  * Color
  *
- * @Entity @Table(name="color")
+ * @Table(name="color")
+ * @Entity
  */
 class Color
 {
     /**
      * @var int
      *
-     * @Id @Column(name="id", type="integer", nullable=false)
+     * @Column(name="id", type="integer", nullable=false)
+     * @Id
      * @GeneratedValue(strategy="IDENTITY")
      */
     public $id;
@@ -36,7 +38,7 @@ class Color
     /**
      * Get the value of id
      *
-     * @return int id
+     * @return  int
      */ 
     public function getId()
     {
@@ -46,7 +48,7 @@ class Color
     /**
      * Get the value of name
      *
-     * @return string name
+     * @return  string|null
      */ 
     public function getName()
     {
@@ -74,7 +76,7 @@ class Color
     /**
      * Get the value of hexadecimal
      *
-     * @return string hexadecimal
+     * @return  string|null
      */ 
     public function getHexadecimal()
     {

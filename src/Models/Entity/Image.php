@@ -2,62 +2,144 @@
 
 
 
-use Doctrine\ORM\Mapping as ORM;
+namespace App\Models\Entity;
 
 /**
  * Image
  *
- * @ORM\Table(name="image", indexes={@ORM\Index(name="fk_image_product1_idx", columns={"product_id"})})
- * @ORM\Entity
+ * @Table(name="image", indexes={@Index(name="fk_image_product1_idx", columns={"product_id"})})
+ * @Entity
  */
 class Image
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Column(name="id", type="integer", nullable=false)
+     * @Id
+     * @GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    public $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="url", type="string", length=255, nullable=true)
+     * @Column(name="prefix", type="string", length=255, nullable=true)
      */
-    private $url;
+    public $prefix;
 
-    /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(name="register", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
-     */
-    private $register = 'CURRENT_TIMESTAMP';
+    ///**
+    // * @var \DateTime|null
+    // *
+    // * @Column(name="register", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+    // */
+    //public $register = 'CURRENT_TIMESTAMP';
 
-    /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(name="exclusion", type="datetime", nullable=true)
-     */
-    private $exclusion;
+    ///**
+    // * @var \DateTime|null
+    // *
+    // * @Column(name="exclusion", type="datetime", nullable=true)
+    // */
+    //public $exclusion;
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="main", type="boolean", nullable=true)
+     * @Column(name="main", type="boolean", nullable=true)
      */
-    private $main = '0';
+    public $main = '0';
 
     /**
-     * @var \Product
+     * @var \App\Models\Entity\Product
      *
-     * @ORM\ManyToOne(targetEntity="Product")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     * @ManyToOne(targetEntity="App\Models\Entity\Product")
+     * @JoinColumns({
+     *   @JoinColumn(name="product_id", referencedColumnName="id")
      * })
      */
-    private $product;
+    public $product;
 
 
+
+    /**
+     * Get the value of prefix
+     *
+     * @return  string|null
+     */ 
+    public function getPrefix()
+    {
+        return $this->prefix;
+    }
+
+    /**
+     * Set the value of prefix
+     *
+     * @param  string|null  $prefix
+     *
+     * @return  self
+     */ 
+    public function setPrefix($prefix)
+    {
+        $this->prefix = $prefix;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of product
+     *
+     * @return  \App\Models\Entity\Product
+     */ 
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * Set the value of product
+     *
+     * @param  \App\Models\Entity\Product  $product
+     *
+     * @return  self
+     */ 
+    public function setProduct(\App\Models\Entity\Product $product)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of main
+     *
+     * @return  bool|null
+     */ 
+    public function getMain()
+    {
+        return $this->main;
+    }
+
+    /**
+     * Set the value of main
+     *
+     * @param  bool|null  $main
+     *
+     * @return  self
+     */ 
+    public function setMain($main)
+    {
+        $this->main = $main;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of id
+     *
+     * @return  int
+     */ 
+    public function getId()
+    {
+        return $this->id;
+    }
 }

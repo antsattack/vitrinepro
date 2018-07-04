@@ -2,76 +2,76 @@
 
 
 
-use Doctrine\ORM\Mapping as ORM;
+namespace App\Models\Entity;
 
 /**
  * Attribute
  *
- * @ORM\Table(name="attribute", indexes={@ORM\Index(name="fk_attribute_category1_idx", columns={"category_id"})})
- * @ORM\Entity
+ * @Table(name="attribute", indexes={@Index(name="fk_attribute_category1_idx", columns={"category_id"})})
+ * @Entity
  */
 class Attribute
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Column(name="id", type="integer", nullable=false)
+     * @Id
+     * @GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    public $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     * @Column(name="name", type="string", length=255, nullable=true)
      */
-    private $name;
+    public $name;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="description", type="text", length=65535, nullable=true)
+     * @Column(name="description", type="text", length=65535, nullable=true)
      */
-    private $description;
+    public $description;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="register", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     * @Column(name="register", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $register = 'CURRENT_TIMESTAMP';
+    public $register = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="exclusion", type="datetime", nullable=true)
+     * @Column(name="exclusion", type="datetime", nullable=true)
      */
-    private $exclusion;
+    public $exclusion;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="unit", type="string", length=45, nullable=true)
+     * @Column(name="unit", type="string", length=45, nullable=true)
      */
-    private $unit;
+    public $unit;
 
     /**
-     * @var \Category
+     * @var \App\Models\Entity\Category
      *
-     * @ORM\ManyToOne(targetEntity="Category")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * @ManyToOne(targetEntity="App\Models\Entity\Category")
+     * @JoinColumns({
+     *   @JoinColumn(name="category_id", referencedColumnName="id")
      * })
      */
-    private $category;
+    public $category;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Product", mappedBy="attribute")
+     * @ManyToMany(targetEntity="App\Models\Entity\Product", mappedBy="attribute")
      */
-    private $product;
+    public $product;
 
     /**
      * Constructor

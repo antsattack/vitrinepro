@@ -2,45 +2,45 @@
 
 
 
-use Doctrine\ORM\Mapping as ORM;
+namespace App\Models\Entity;
 
 /**
  * Shippingformat
  *
- * @ORM\Table(name="shippingformat")
- * @ORM\Entity
+ * @Table(name="shippingformat")
+ * @Entity
  */
 class Shippingformat
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Column(name="id", type="integer", nullable=false)
+     * @Id
+     * @GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    public $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     * @Column(name="name", type="string", length=255, nullable=true)
      */
-    private $name;
+    public $name;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="description", type="text", length=65535, nullable=true)
+     * @Column(name="description", type="text", length=65535, nullable=true)
      */
-    private $description;
+    public $description;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="register", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     * @Column(name="register", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $register = 'CURRENT_TIMESTAMP';
+    public $register = 'CURRENT_TIMESTAMP';
 
 
 }

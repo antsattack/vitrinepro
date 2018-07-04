@@ -2,83 +2,83 @@
 
 
 
-use Doctrine\ORM\Mapping as ORM;
+namespace App\Models\Entity;
 
 /**
  * Paymentdata
  *
- * @ORM\Table(name="paymentdata", indexes={@ORM\Index(name="fk_payment_data_user2_idx", columns={"user_id"})})
- * @ORM\Entity
+ * @Table(name="paymentdata", indexes={@Index(name="fk_payment_data_user2_idx", columns={"user_id"})})
+ * @Entity
  */
 class Paymentdata
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Column(name="id", type="integer", nullable=false)
+     * @Id
+     * @GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    public $id;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="creditcard_number", type="integer", nullable=true)
+     * @Column(name="creditcard_number", type="integer", nullable=true)
      */
-    private $creditcardNumber;
+    public $creditcardNumber;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="security_code", type="integer", nullable=true)
+     * @Column(name="security_code", type="integer", nullable=true)
      */
-    private $securityCode;
+    public $securityCode;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="expiring", type="datetime", nullable=true)
+     * @Column(name="expiring", type="datetime", nullable=true)
      */
-    private $expiring;
+    public $expiring;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="paypal", type="integer", nullable=true)
+     * @Column(name="paypal", type="integer", nullable=true)
      */
-    private $paypal;
+    public $paypal;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="pagseguro", type="integer", nullable=true)
+     * @Column(name="pagseguro", type="integer", nullable=true)
      */
-    private $pagseguro;
+    public $pagseguro;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="register", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     * @Column(name="register", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $register = 'CURRENT_TIMESTAMP';
+    public $register = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="exclusion", type="datetime", nullable=true)
+     * @Column(name="exclusion", type="datetime", nullable=true)
      */
-    private $exclusion;
+    public $exclusion;
 
     /**
-     * @var \User
+     * @var \App\Models\Entity\User
      *
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ManyToOne(targetEntity="App\Models\Entity\User")
+     * @JoinColumns({
+     *   @JoinColumn(name="user_id", referencedColumnName="id")
      * })
      */
-    private $user;
+    public $user;
 
 
 }

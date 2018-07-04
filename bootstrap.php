@@ -14,7 +14,11 @@ use Firebase\JWT\JWT;
 $configs = [
     'settings' => [
         'displayErrorDetails' => true,
-    ]   
+    ],
+    'appsettings' => [
+        'prefix' => 'ssc',
+        'url' => 'http://images.antsattack.com'
+    ]
 ];
 
 /**
@@ -100,6 +104,10 @@ $conn = array(
     'password' => '.Jacarta127280',
     'host' => 'vitrinepro.cyur6u9cx6vc.sa-east-1.rds.amazonaws.com',
     'driver' => 'pdo_mysql',
+    'charset'  => 'utf8',
+    'driverOptions' => array(
+        1002 => 'SET NAMES utf8'
+    )
 );
 
 
@@ -123,6 +131,18 @@ $container['secretkey'] = "secretloko";
  * Application Instance
  */
 $app = new \Slim\App($container);
+
+$app->options('/{routes:.+}', function ($request, $response, $args) {
+    return $response;
+});
+
+$app->add(function ($req, $res, $next) {
+    $response = $next($req, $res);
+    return $response
+        ->withHeader('Access-Control-Allow-Origin', '*')
+        ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization, X-Token')
+        ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+});
 
 /**
  * @Middleware Tratamento da / do Request 

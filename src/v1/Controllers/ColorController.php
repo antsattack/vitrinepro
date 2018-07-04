@@ -7,7 +7,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 use App\Models\Entity\Color;
 
 /**
- * Controller v1 de livros
+ * Controller v1 de cores
  */
 class ColorController {
 

@@ -2,49 +2,49 @@
 
 
 
-use Doctrine\ORM\Mapping as ORM;
+namespace App\Models\Entity;
 
 /**
  * ProductColor
  *
- * @ORM\Table(name="product_color", indexes={@ORM\Index(name="fk_product_has_color_color1_idx", columns={"color1_id"}), @ORM\Index(name="fk_product_has_color_product1_idx", columns={"product_id"}), @ORM\Index(name="fk_product_color_color1_idx", columns={"color2_id"})})
- * @ORM\Entity
+ * @Table(name="product_color", indexes={@Index(name="fk_product_has_color_color1_idx", columns={"color1_id"}), @Index(name="fk_product_has_color_product1_idx", columns={"product_id"}), @Index(name="fk_product_color_color1_idx", columns={"color2_id"})})
+ * @Entity
  */
 class ProductColor
 {
     /**
-     * @var \Color
+     * @var \App\Models\Entity\Color
      *
-     * @ORM\ManyToOne(targetEntity="Color")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="color2_id", referencedColumnName="id")
+     * @ManyToOne(targetEntity="App\Models\Entity\Color")
+     * @JoinColumns({
+     *   @JoinColumn(name="color2_id", referencedColumnName="id")
      * })
      */
-    private $color2;
+    public $color2;
 
     /**
-     * @var \Color
+     * @var \App\Models\Entity\Color
      *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Color")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="color1_id", referencedColumnName="id")
+     * @Id
+     * @GeneratedValue(strategy="NONE")
+     * @OneToOne(targetEntity="App\Models\Entity\Color")
+     * @JoinColumns({
+     *   @JoinColumn(name="color1_id", referencedColumnName="id")
      * })
      */
-    private $color1;
+    public $color1;
 
     /**
-     * @var \Product
+     * @var \App\Models\Entity\Product
      *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Product")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     * @Id
+     * @GeneratedValue(strategy="NONE")
+     * @OneToOne(targetEntity="App\Models\Entity\Product")
+     * @JoinColumns({
+     *   @JoinColumn(name="product_id", referencedColumnName="id")
      * })
      */
-    private $product;
+    public $product;
 
 
 }
