@@ -136,29 +136,25 @@ class ImageController {
                     throw new \Exception("Não persistiu", 1);
                 }
 
-                $original_name = $file->getClientFilename();
-                $ext = explode(".",$original_name);
-                $name = $prefix."/".$params->product."_".$novoId.".".end($ext);
+                $name = $prefix."/".$params->product."_".$novoId.".jpg";
 
                 $tmpname = $file->file;
 
                 /**
                  * reduzir arquivo
                  */
-                $info = getimagesize($source);
+                $info = getimagesize($tmpname);
 
                 if ($info['mime'] == 'image/jpeg'){
                     $newImage = imagecreatefromjpeg($tmpname);
-                    $reduced = "temp.jpg";
                 }
                 elseif ($info['mime'] == 'image/gif'){
                     $newImage = imagecreatefromgif($tmpname);
-                    $reduced = "temp.gif";
                 }
                 elseif ($info['mime'] == 'image/png'){
                     $newImage = imagecreatefrompng($tmpname);
-                    $reduced = "temp.png";
                 }
+                $reduced = "temp.jpg";
                 
                 $largura_original = imagesX($newImage);
                 $altura_original = imagesY($newImage);
@@ -168,15 +164,7 @@ class ImageController {
 
                 imagecopyresampled($imgReduced, $newImage, 0, 0, 0, 0, 640, $altura_nova, $largura_original,  $altura_original);
 
-                if ($info['mime'] == 'image/jpeg'){
-                    imagejpeg($imgReduced, $reduced, 100);
-                }
-                elseif ($info['mime'] == 'image/gif'){
-                    imagegif($imgReduced, $reduced);
-                }
-                elseif ($info['mime'] == 'image/png'){
-                    imagepng($imgReduced, $reduced, 0);
-                }
+                imagejpeg($imgReduced, $reduced, 100);
  
                 /**
                  * cria o objeto do cliente S3, necessita passar as credenciais da AWS
