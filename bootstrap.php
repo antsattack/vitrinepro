@@ -98,11 +98,25 @@ $conn = array(
     'path' => __DIR__ . '/db.sqlite',
 );
 */
+
+$cnf['local']['user'] = 'root';
+$cnf['local']['pwd'] = 'root';
+$cnf['local']['host'] = '127.0.0.1';
+$cnf['local']['port'] = '8889';
+
+$cnf['aws']['user'] = 'vitrinepro';
+$cnf['aws']['pwd'] = '.Jacarta127280';
+$cnf['aws']['host'] = 'vitrinepro.cyur6u9cx6vc.sa-east-1.rds.amazonaws.com';
+$cnf['aws']['port'] = '3456';
+
+$env = 'local';
+
 $conn = array(
     'dbname' => 'vitrinepro',
-    'user' => 'vitrinepro',
-    'password' => '.Jacarta127280',
-    'host' => 'vitrinepro.cyur6u9cx6vc.sa-east-1.rds.amazonaws.com',
+    'user' => $cnf[$env]['user'],
+    'password' => $cnf[$env]['pwd'],
+    'host' => $cnf[$env]['host'],
+    'port' => $cnf[$env]['port'],
     'driver' => 'pdo_mysql',
     'charset'  => 'utf8',
     'driverOptions' => array(

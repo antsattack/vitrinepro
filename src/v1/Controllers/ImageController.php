@@ -1,8 +1,8 @@
 <?php
 namespace App\v1\Controllers;
 
-define(ACCESS_KEY, "AKIAIMUUC5SC4SYPQPRQ");
-define(SECRET_KEY, "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");
+define(AKANTSATTACK, getenv("AKANTSATTACK"));
+define(SKANTSATTACK, getenv("SKANTSATTACK"));
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
@@ -170,8 +170,8 @@ class ImageController {
                  * cria o objeto do cliente S3, necessita passar as credenciais da AWS
                  */ 
                 $clientS3 = S3Client::factory(array(
-                    'key' => ACCESS_KEY,
-                    'secret' => SECRET_KEY
+                    'key' => AKANTSATTACK,
+                    'secret' => SKANTSATTACK
                 ));
                 $clientS3->setRegion('sa-east-1');
 
