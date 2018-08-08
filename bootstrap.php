@@ -8,6 +8,9 @@ use Psr7Middlewares\Middleware\TrailingSlash;
 use Monolog\Logger;
 use Firebase\JWT\JWT;
 
+define(BDPSWD, getenv("BDPSWD"));
+define(ENVIR, getenv("ENVIR"));
+
 /**
  * Configurações
  */
@@ -105,11 +108,11 @@ $cnf['local']['host'] = '127.0.0.1';
 $cnf['local']['port'] = '8889';
 
 $cnf['aws']['user'] = 'vitrinepro';
-$cnf['aws']['pwd'] = '.Jacarta127280';
+$cnf['aws']['pwd'] = BDPSWD;
 $cnf['aws']['host'] = 'vitrinepro.cyur6u9cx6vc.sa-east-1.rds.amazonaws.com';
 $cnf['aws']['port'] = '3456';
 
-$env = 'local';
+$env = ENVIR;
 
 $conn = array(
     'dbname' => 'vitrinepro',
