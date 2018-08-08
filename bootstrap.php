@@ -110,7 +110,7 @@ $cnf['local']['port'] = '8889';
 $cnf['aws']['user'] = 'vitrinepro';
 $cnf['aws']['pwd'] = BDPSWD;
 $cnf['aws']['host'] = 'vitrinepro.cyur6u9cx6vc.sa-east-1.rds.amazonaws.com';
-$cnf['aws']['port'] = '3456';
+$cnf['aws']['port'] = '3306';
 
 $env = ENVIR;
 
