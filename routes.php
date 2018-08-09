@@ -6,6 +6,13 @@
 $app->group('/v1', function() {
 
     /**
+     * Dentro de v1, o recurso /products
+     */
+    $this->group('/products', function() {
+        $this->post('', '\App\v1\Controllers\ProductController:createProduct');
+    });
+
+    /**
      * Dentro de v1, o recurso /colors
      */
     $this->group('/colors', function() {

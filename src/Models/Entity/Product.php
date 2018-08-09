@@ -180,4 +180,115 @@ class Product
 
         return $this;
     }
+
+    /**
+     * Get the value of title
+     *
+     * @return  string|null
+     */ 
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set the value of title
+     *
+     * @param  string|null  $title
+     *
+     * @return  self
+     */ 
+    public function setTitle($title)
+    {
+        if (!$title && !is_string($title)) {
+            throw new \InvalidArgumentException("Title of product is required", 400);
+        }
+        
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of description
+     *
+     * @return  string|null
+     */ 
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set the value of description
+     *
+     * @param  string|null  $description
+     *
+     * @return  self
+     */ 
+    public function setDescription($description)
+    {
+        if (!$description && !is_string($description)) {
+            throw new \InvalidArgumentException("Description of product is required", 400);
+        }
+        
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of currency
+     *
+     * @return  \App\Models\Entity\Currency
+     */ 
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
+
+    /**
+     * Set the value of currency
+     *
+     * @param  \App\Models\Entity\Currency  $currency
+     *
+     * @return  self
+     */ 
+    public function setCurrency(\App\Models\Entity\Currency $currency)
+    {
+        $this->currency = $currency;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of seller
+     *
+     * @return  \App\Models\Entity\User
+     */ 
+    public function getSeller()
+    {
+        return $this->seller;
+    }
+
+    /**
+     * Set the value of seller
+     *
+     * @param  \App\Models\Entity\User  $seller
+     *
+     * @return  self
+     */ 
+    public function setSeller(\App\Models\Entity\User $seller)
+    {
+        $this->seller = $seller;
+
+        return $this;
+    }
+
+    /**
+     * @return App\Models\Entity\Product
+     */
+    public function getValues() {
+        return get_object_vars($this);
+    }
 }
