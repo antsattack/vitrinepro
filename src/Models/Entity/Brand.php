@@ -29,18 +29,13 @@ class Brand
     public $name;
 
     /**
-     * @var \DateTime|null
+     * @var \App\Models\Entity\Category
      *
-     * @Column(name="register", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     * @ManyToOne(targetEntity="App\Models\Entity\Category")
+     * @JoinColumns({
+     *   @JoinColumn(name="category_id", referencedColumnName="id")
+     * })
      */
-    public $register = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \DateTime|null
-     *
-     * @Column(name="exclusion", type="datetime", nullable=true)
-     */
-    public $exclusion;
-
+    public $category;
 
 }

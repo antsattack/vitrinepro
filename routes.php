@@ -45,6 +45,13 @@ $app->group('/v1', function() {
     });
 
     /**
+     * Dentro de v1, o recurso /brands
+     */
+    $this->group('/brands', function() {
+        $this->get('/category/{category_id:[0-9]+}', '\App\v1\Controllers\BrandController:listBrand');
+    });
+
+    /**
      * Dentro de v1, o recurso /transactions
      */
     $this->group('/transactions', function() {

@@ -4,12 +4,12 @@ namespace App\v1\Controllers;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-use App\Models\Entity\Category;
+use App\Models\Entity\Brand;
 
 /**
  * Controller v1
  */
-class CategoryController {
+class BrandController {
 
     /**
      * Container Class
@@ -32,43 +32,38 @@ class CategoryController {
      * @param [type] $args
      * @return Response
      */
-    public function listCategory($request, $response, $args) {
+    public function listBrand($request, $response, $args) {
         
-        $parent_id = (int) $args['parent_id'];
-        $parent_id = ($parent_id) ? $parent_id : 0;
+        $category_id = (int) $args['category_id'];
+        $category_id = ($category_id) ? $category_id : 0;
 
         $entityManager = $this->container->get('em');
-        $where = "p.id = c.id";
-        if ($parent_id){
-            $where = "p.id = $parent_id AND c.id != $parent_id";
-        }
+        
         $dql = "
             SELECT 
-            c.id AS id,
-            c.name AS name,
-            c.description AS description
+                b.id AS id,
+                b.name AS name
             FROM 
-                App\Models\Entity\Category c
-                JOIN c.parent p
+                App\Models\Entity\Brand b
+                JOIN b.category c
             WHERE 
-                $where
+                c.id = $category_id
             ORDER BY
-                c.name
+                b.name
         ";
         $query = $entityManager->createQuery($dql);
-        $categories_temp = $query->getResult();
+        $brands_temp = $query->getResult();
 
-        $categories = [];
+        $brands = [];
 
         $i = 0;
-        foreach($categories_temp AS $item){
-            $categories[$i]['id'] = (int) $item['id'];
-            $categories[$i]['name'] = $item['name'];
-            $categories[$i]['description'] = $item['description'];
+        foreach($brands_temp AS $item){
+            $brands[$i]['id'] = (int) $item['id'];
+            $brands[$i]['name'] = $item['name'];
             $i++;
         }
 
-        $return = $response->withJson($categories, 200)
+        $return = $response->withJson($brands, 200)
             ->withHeader('Content-type', 'application/json');
         return $return;
     }
