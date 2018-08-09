@@ -190,4 +190,59 @@ class ImageController {
         }
         return $return;
     }
+
+    /**
+     * Deleta uma imagem
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return Response
+     */
+    public function deleteImage($request, $response, $args) {
+
+        $id = (int) $args['id'];
+
+        /**
+         * Encontra no Banco
+         */ 
+        $entityManager = $this->container->get('em');
+        $imagesRepository = $entityManager->getRepository('App\Models\Entity\Image');
+        $image = $imagesRepository->find($id);
+
+        /**
+         * Verifica se existe
+         */
+        if (!$image) {
+            $logger = $this->container->get('logger');
+            $logger->warning("Image {$id} Not Found");
+            throw new \Exception("Image not Found", 404);
+        }
+
+        /**
+         * Remove a imagem do S3
+         */
+        $clientS3 = S3Client::factory(array(
+            'key' => AKANTSATTACK,
+            'secret' => SKANTSATTACK
+        ));
+        $clientS3->setRegion('sa-east-1');
+
+        $name = $image->prefix."/".$image->product->id."_".$image->id.".jpg";
+
+        $resp = $clientS3->deleteObject(array(
+            'Bucket' => "images.antsattack.com",
+            'Key'    => $name,
+            'RequestPayer' => 'requester',
+        ));
+
+        /**
+         * Remove a entidade
+         */
+        $entityManager->remove($image);
+        $entityManager->flush();
+
+        $return = $response->withJson(['msg' => "Deleting the image {$id}"], 204)
+            ->withHeader('Content-type', 'application/json');
+        return $return;
+    }
 }

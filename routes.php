@@ -26,8 +26,6 @@ $app->group('/v1', function() {
     $this->group('/images', function() {
         $this->get('/product/{product_id:[0-9]+}', '\App\v1\Controllers\ImageController:listImage');
         $this->post('', '\App\v1\Controllers\ImageController:createImage');
-        
-        $this->get('/{id:[0-9]+}', '\App\v1\Controllers\ImageController:viewImage');
         $this->delete('/{id:[0-9]+}', '\App\v1\Controllers\ImageController:deleteImage');
     });
 
