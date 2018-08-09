@@ -36,20 +36,6 @@ class Category
     public $description;
 
     /**
-     * @var \DateTime|null
-     *
-     * @Column(name="register", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
-     */
-    public $register = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \DateTime|null
-     *
-     * @Column(name="exclusion", type="datetime", nullable=true)
-     */
-    public $exclusion;
-
-    /**
      * @var \App\Models\Entity\Category
      *
      * @ManyToOne(targetEntity="App\Models\Entity\Category")
@@ -59,5 +45,41 @@ class Category
      */
     public $parent;
 
+    /**
+     * Get the value of id
+     *
+     * @return  int
+     */ 
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Get the value of name
+     *
+     * @return  string|null
+     */ 
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Get the value of description
+     *
+     * @return  string|null
+     */ 
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @return App\Models\Entity\Category
+     */
+    public function getValues() {
+        return get_object_vars($this);
+    }
 
 }

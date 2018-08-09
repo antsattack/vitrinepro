@@ -37,6 +37,14 @@ $app->group('/v1', function() {
     });
 
     /**
+     * Dentro de v1, o recurso /categories
+     */
+    $this->group('/categories', function() {
+        $this->get('', '\App\v1\Controllers\CategoryController:listCategory');
+        $this->get('/{parent_id:[0-9]+}', '\App\v1\Controllers\CategoryController:listCategory');
+    });
+
+    /**
      * Dentro de v1, o recurso /transactions
      */
     $this->group('/transactions', function() {
