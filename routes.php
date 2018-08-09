@@ -24,7 +24,7 @@ $app->group('/v1', function() {
      * Dentro de v1, o recurso /images
      */
     $this->group('/images', function() {
-        $this->get('/product/{id:[0-9]+}', '\App\v1\Controllers\ImageController:listImage');
+        $this->get('/product/{product_id:[0-9]+}', '\App\v1\Controllers\ImageController:listImage');
         $this->post('', '\App\v1\Controllers\ImageController:createImage');
         
         $this->get('/{id:[0-9]+}', '\App\v1\Controllers\ImageController:viewImage');
@@ -36,6 +36,13 @@ $app->group('/v1', function() {
      */
     $this->group('/transactions', function() {
         $this->get('', '\App\v1\Controllers\TransactionController:listTransaction');
+    });
+
+    /**
+     * Dentro de v1, o recurso /advisors
+     */
+    $this->group('/advisors', function() {
+        $this->get('/{id:[0-9]+}', '\App\v1\Controllers\AdvisorController:listAdvisor');
     });
 
     /**

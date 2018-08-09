@@ -40,51 +40,41 @@ class ImageController {
     public function listImage($request, $response, $args) {
 
         $product_id = (int) $args['product_id'];
+        $product_id = ($product_id) ? $product_id : 0;
 
         $entityManager = $this->container->get('em');
-        $imagesRepository = $entityManager->getRepository('App\Models\Entity\Image');
+        /*$imagesRepository = $entityManager->getRepository('App\Models\Entity\Image');
         $images = $imagesRepository->findBy(array('product' => $product_id));
         $return = $response->withJson($images, 200)
             ->withHeader('Content-type', 'application/json');
-        return $return;
-    }
+        return $return;*/
+        $query = $entityManager->createQuery("
+            SELECT 
+                i.id AS image_id,
+                i.prefix AS prefix,
+                p.id AS product_id
+            FROM 
+                App\Models\Entity\Image i
+                JOIN i.product p
+            WHERE 
+                p.id = $product_id
+            ORDER BY
+                i.id
+        ");
+        $images_temp = $query->getResult();
 
-    /**
-     * Exibe as informações de uma imagem 
-     * @param [type] $request
-     * @param [type] $response
-     * @param [type] $args
-     * @return Response
-     */
-    public function viewImage($request, $response, $args) {
+        $images = [];
 
-        $id = (int) $args['id'];
+        $i = 0;
+        foreach($images_temp AS $item){
+            $key_image = "image_".$item['image_id'];
+            $images[$i]['id'] = (int) $item['image_id'];
+            $images[$i]['url'] = "http://images.antsattack.com/".$item['prefix']."/".$item['product_id']."_".$item['image_id'].".jpg";
+            $i++;
+        }
 
-        $appsettings = $this->container->get('appsettings');
-        $prefix = $appsettings["prefix"];
-        $url = $appsettings["url"]."/".$prefix."/";
-
-        $entityManager = $this->container->get('em');
-        $ImagesRepository = $entityManager->getRepository('App\Models\Entity\Image');
-        $Image = $ImagesRepository->find($id);
-
-        /**
-         * Verifica se existe uma imagem com a ID informada
-         */
-        /*
-        if (!$Image) {
-            $logger = $this->container->get('logger');
-            $logger->warning("Image {$id} Not Found");
-            throw new \Exception("Image not Found", 404);
-        }    
-
-        $return = $response->withJson($Image2, 200)
+        $return = $response->withJson($images, 200)
             ->withHeader('Content-type', 'application/json');
-        */
-
-        $return = $response->withJson($url, 200)
-            ->withHeader('Content-type', 'application/json');
-
         return $return;
     }
 
