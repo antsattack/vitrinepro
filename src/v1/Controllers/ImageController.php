@@ -145,16 +145,31 @@ class ImageController {
                     $newImage = imagecreatefrompng($tmpname);
                 }
                 $reduced = "temp.jpg";
+
+                $largura = 640;
                 
                 $largura_original = imagesX($newImage);
                 $altura_original = imagesY($newImage);
-                
-                $altura_nova = (int) ($altura_original * 640)/$largura_original;
-                $imgReduced = imagecreatetruecolor(640,$altura_nova);
 
-                imagecopyresampled($imgReduced, $newImage, 0, 0, 0, 0, 640, $altura_nova, $largura_original,  $altura_original);
+                if ($altura_original < $largura_original){
+                    $altura_nova = (int) ($altura_original * $largura)/$largura_original;
+                    $imgReduced = imagecreatetruecolor($largura,$altura_nova);
 
-                imagejpeg($imgReduced, $reduced, 100);
+                    imagecopyresampled($imgReduced, $newImage, 0, 0, 0, 0, $largura, $altura_nova, $largura_original,  $altura_original);
+                } else{
+                    $largura_nova = (int) ($largura_original * $largura)/$altura_original;
+                    $imgReduced = imagecreatetruecolor($largura_nova,$largura);
+
+                    imagecopyresampled($imgReduced, $newImage, 0, 0, 0, 0, $largura_nova, $largura, $largura_original,  $altura_original);
+                }
+
+                //crop
+                $size = min(imagesx($imgReduced), imagesy($imgReduced));
+                $imgCropped = imagecrop($imgReduced, ['x' => 0, 'y' => 0, 'width' => $size, 'height' => $size]);
+
+                imagejpeg($imgCropped, $reduced, 100);
+                imagedestroy($imgCropped);
+                imagedestroy($imgReduced);
  
                 /**
                  * cria o objeto do cliente S3, necessita passar as credenciais da AWS
