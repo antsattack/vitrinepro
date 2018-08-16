@@ -156,16 +156,23 @@ class ImageController {
                     $imgReduced = imagecreatetruecolor($largura,$altura_nova);
 
                     imagecopyresampled($imgReduced, $newImage, 0, 0, 0, 0, $largura, $altura_nova, $largura_original,  $altura_original);
+                    $desloc = ($largura_original/2)-($largura/2);
+
+                    //crop
+                    $size = min(imagesx($imgReduced), imagesy($imgReduced));
+                    $imgCropped = imagecrop($imgReduced, ['x' => $desloc, 'y' => 0, 'width' => $size, 'height' => $size]);
+
                 } else{
                     $largura_nova = (int) ($largura_original * $largura)/$altura_original;
                     $imgReduced = imagecreatetruecolor($largura_nova,$largura);
 
                     imagecopyresampled($imgReduced, $newImage, 0, 0, 0, 0, $largura_nova, $largura, $largura_original,  $altura_original);
-                }
+                    $desloc = ($altura_original/2)-($largura/2);
 
-                //crop
-                $size = min(imagesx($imgReduced), imagesy($imgReduced));
-                $imgCropped = imagecrop($imgReduced, ['x' => 0, 'y' => 0, 'width' => $size, 'height' => $size]);
+                    //crop
+                    $size = min(imagesx($imgReduced), imagesy($imgReduced));
+                    $imgCropped = imagecrop($imgReduced, ['x' => 0, 'y' => $desloc, 'width' => $size, 'height' => $size]);
+                }
 
                 imagejpeg($imgCropped, $reduced, 100);
                 imagedestroy($imgCropped);
