@@ -9,7 +9,6 @@ use \Psr\Http\Message\ResponseInterface as Response;
 use \Aws\S3\S3Client;
 use App\Models\Entity\Image;
 use App\Models\Entity\Product;
-use Guzzle\Http\EntityBody;
 
 
 /**
@@ -194,7 +193,7 @@ class ImageController {
                 $resp = $clientS3->putObject(array(
                     'Bucket' => "images.antsattack.com",
                     'Key' => $name,
-                    'Body' =>  EntityBody::factory(fopen($reduced, 'r')),
+                    'Body' =>  file_get_contents($reduced),
                     'Sourcefile' => $reduced
                 ));
 
