@@ -193,10 +193,7 @@ class ImageController {
                 $resp = $clientS3->putObject(array(
                     'Bucket' => "images.antsattack.com",
                     'Key' => $name,
-                    'Body' =>  array(
-                        'file' => $reduced,
-                        'size' => filesize($reduced)
-                    ),
+                    'Body' =>  EntityBody::factory(fopen($reduced, 'r')),
                     'Sourcefile' => $reduced
                 ));
 
