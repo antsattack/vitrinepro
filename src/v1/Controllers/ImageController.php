@@ -193,12 +193,12 @@ class ImageController {
                 $resp = $clientS3->putObject(array(
                     'Bucket' => "images.antsattack.com",
                     'Key'    => $name,
-                    'SourceFile' => $reduced,
+                    'Body' => $reduced,
                 ));
 
                 unlink($reduced);
             }
-            $ret = 1;
+            $ret = "http://images.antsattack.com/ssc/".$name;
 
             $entityManager->getConnection()->commit();
 
