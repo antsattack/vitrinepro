@@ -146,7 +146,7 @@ class ImageController {
                 }
                 $reduced = "/tmp/temp.jpg";
 
-                $largura = 640;
+                $largura = 500;
                 
                 $largura_original = imagesX($newImage);
                 $altura_original = imagesY($newImage);
@@ -177,7 +177,7 @@ class ImageController {
                 imagejpeg($imgCropped, $reduced, 100);
                 imagedestroy($imgCropped);
                 imagedestroy($imgReduced);
-		chmod($reduced,0777);
+                chmod($reduced,0777);
  
                 /**
                  * cria o objeto do cliente S3, necessita passar as credenciais da AWS
