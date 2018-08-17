@@ -9,6 +9,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 use \Aws\S3\S3Client;
 use App\Models\Entity\Image;
 use App\Models\Entity\Product;
+use Guzzle\Http\EntityBody;
 
 
 /**
