@@ -144,7 +144,7 @@ class ImageController {
                 elseif ($info['mime'] == 'image/png'){
                     $newImage = imagecreatefrompng($tmpname);
                 }
-                $reduced = "temp.jpg";
+                $reduced = "/tmp/temp.jpg";
 
                 $largura = 640;
                 
@@ -177,6 +177,7 @@ class ImageController {
                 imagejpeg($imgCropped, $reduced, 100);
                 imagedestroy($imgCropped);
                 imagedestroy($imgReduced);
+		chmod($reduced,0777);
  
                 /**
                  * cria o objeto do cliente S3, necessita passar as credenciais da AWS
@@ -191,9 +192,9 @@ class ImageController {
                  * método putObject envia os dados pro bucket selecionado
                  */
                 $resp = $clientS3->putObject(array(
-                    'Bucket'        => "images.antsattack.com",
-                    'Key'           => $name,
-                    'Sourcefile'    => $reduced
+                    'Bucket' => "images.antsattack.com",
+                    'Key' => $name,
+                    'SourceFile' => $reduced
                 ));
 
                 unlink($reduced);
