@@ -191,9 +191,11 @@ class ImageController {
                  * método putObject envia os dados pro bucket selecionado
                  */
                 $resp = $clientS3->putObject(array(
-                    'Bucket' => "images.antsattack.com",
-                    'Key' => $name,
-                    'Body' => fopen($reduced, 'r+')
+                    'Bucket'        => "images.antsattack.com",
+                    'Key'           => $name,
+                    'Body'          => fopen($reduced, 'r+'),
+                    'ContentType'   => 'image/jpg',
+                    'ACL'           => 'public-read'
                 ));
 
                 unlink($reduced);
