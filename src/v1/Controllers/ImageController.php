@@ -194,6 +194,7 @@ class ImageController {
                     'Bucket'        => "images.antsattack.com",
                     'Key'           => $name,
                     'Body'          => fopen($reduced, 'r+'),
+                    'Sourcefile'    => $reduced,
                     'ContentType'   => 'image/jpg',
                     'ACL'           => 'public-read'
                 ));
