@@ -193,9 +193,7 @@ class ImageController {
                 $resp = $clientS3->putObject(array(
                     'Bucket'        => "images.antsattack.com",
                     'Key'           => $name,
-                    'Body'          => fopen($reduced, 'r+'),
-                    'ContentType'   => 'image/jpg',
-                    'ACL'           => 'public-read'
+                    'Sourcefile'    => $reduced
                 ));
 
                 unlink($reduced);
