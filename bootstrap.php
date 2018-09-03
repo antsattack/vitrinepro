@@ -113,6 +113,7 @@ $cnf['aws']['host'] = 'vitrinepro.cyur6u9cx6vc.sa-east-1.rds.amazonaws.com';
 $cnf['aws']['port'] = '3306';
 
 $env = ENVIR;
+$env = "aws";
 
 $conn = array(
     'dbname' => 'vitrinepro',
@@ -171,23 +172,23 @@ $app->add(new TrailingSlash(false));
 /**
  * Auth básica HTTP
  */
-$app->add(new \Slim\Middleware\HttpBasicAuthentication([
+//$app->add(new \Slim\Middleware\HttpBasicAuthentication([
     /**
      * Usuários existentes
      */
-    "users" => [
-        "root" => "toor"
-    ],
+   // "users" => [
+    //    "root" => "toor"
+    //],
     /**
      * Blacklist - Deixa todas liberadas e só protege as dentro do array
      */
-    "path" => ["/auth"],
+    //"path" => ["/auth"],
 
     /**
      * Whitelist - Protege todas as rotas e só libera as de dentro do array
      */
     //"passthrough" => ["/auth/liberada", "/admin/ping"],
-]));
+//]));
 
 
 /**

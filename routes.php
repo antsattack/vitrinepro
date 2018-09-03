@@ -52,6 +52,13 @@ $app->group('/v1', function() {
     });
 
     /**
+     * Dentro de v1, o recurso /tags
+     */
+    $this->group('/tags', function() {
+        $this->get('/category/{category_id:[0-9]+}', '\App\v1\Controllers\TagController:listTagByCategory');
+    });
+
+    /**
      * Dentro de v1, o recurso /transactions
      */
     $this->group('/transactions', function() {
@@ -69,7 +76,7 @@ $app->group('/v1', function() {
      * Dentro de v1, o recurso /auth
      */
     $this->group('/auth', function() {
-        $this->get('', \App\v1\Controllers\AuthController::class);
+        $this->post('', \App\v1\Controllers\AuthController::class);
     });
 });
 

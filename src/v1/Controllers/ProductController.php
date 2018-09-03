@@ -3,6 +3,7 @@ namespace App\v1\Controllers;
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+use Firebase\JWT\JWT;
 use App\Models\Entity\Product;
 use App\Models\Entity\Currency;
 use App\Models\Entity\User;
@@ -36,8 +37,11 @@ class ProductController {
      */
     public function listProduct($request, $response, $args) {
 
-        $seller_id = (int) $args['seller_id'];
-        $seller_id = ($seller_id) ? $seller_id : 0;
+        $token = $request->getHeaderLine('X-Token');
+        $data = JWT::decode($token, $this->container->get('secretkey'), array('HS512'));
+        if (!$data->userid){
+            return $response->withStatus(401);
+        }
 
         $entityManager = $this->container->get('em');
         $query = $entityManager->createQuery("
@@ -47,7 +51,7 @@ class ProductController {
                 App\Models\Entity\Product p
                 JOIN p.seller s
             WHERE 
-                s.id = $seller_id
+                s.id = $data->userid
             ORDER BY
                 p.id
         ");
@@ -77,7 +81,12 @@ class ProductController {
     public function createProduct($request, $response, $args) {
         $params = (object) $request->getParams();
         $currency = (new Currency())->setId(1);
-        $seller = (new User())->setId($params->seller_id);
+        $token = $request->getHeaderLine('X-Token');
+        $data = JWT::decode($token, $this->container->get('secretkey'), array('HS512'));
+        if (!$data->userid){
+            return $response->withStatus(401);
+        }
+        $seller = (new User())->setId($data->userid);
         /**
          * Pega o Entity Manager do nosso Container
          */
@@ -99,9 +108,9 @@ class ProductController {
         /**
          * Persiste a entidade no banco de dados
          */
-        $entityManager->merge($product);
+        $prd = $entityManager->merge($product);
         $entityManager->flush();
-        $return = $response->withJson(1, 201)
+        $return = $response->withJson($prd->getId(), 201)
             ->withHeader('Content-type', 'application/json');
         return $return;
     }

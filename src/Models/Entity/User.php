@@ -36,18 +36,11 @@ class User
     public $description;
 
     /**
-     * @var \DateTime|null
+     * @var string|null
      *
-     * @Column(name="register", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     * @Column(name="passwd", type="string", length=255, nullable=true)
      */
-    public $register = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \DateTime|null
-     *
-     * @Column(name="exclusion", type="datetime", nullable=true)
-     */
-    public $exclusion;
+    public $passwd;
 
     /**
      * @var \App\Models\Entity\Address
