@@ -238,6 +238,34 @@ class Product
     }
 
     /**
+     * Set the value of category
+     *
+     * @param  \App\Models\Entity\Category  $category
+     *
+     * @return  self
+     */ 
+    public function setCategory(\App\Models\Entity\Category $category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of brand
+     *
+     * @param  \App\Models\Entity\Brand  $brand
+     *
+     * @return  self
+     */ 
+    public function setBrand(\App\Models\Entity\Brand $brand)
+    {
+        $this->brand = $brand;
+
+        return $this;
+    }
+
+    /**
      * Get the value of currency
      *
      * @return  \App\Models\Entity\Currency
@@ -281,6 +309,62 @@ class Product
     public function setSeller(\App\Models\Entity\User $seller)
     {
         $this->seller = $seller;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of model
+     *
+     * @param  string|null  $model
+     *
+     * @return  self
+     */ 
+    public function setModel($model)
+    {
+        $this->model = $model;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of price
+     *
+     * @param  string|null  $price
+     *
+     * @return  self
+     */ 
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of new
+     *
+     * @param  string|null  $new
+     *
+     * @return  self
+     */ 
+    public function setNew($new)
+    {
+        $this->new = $new;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of quantity
+     *
+     * @param  string|null  $quantity
+     *
+     * @return  self
+     */ 
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
 
         return $this;
     }

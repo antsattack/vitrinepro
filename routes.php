@@ -10,6 +10,7 @@ $app->group('/v1', function() {
      */
     $this->group('/products', function() {
         $this->post('', '\App\v1\Controllers\ProductController:createProduct');
+        $this->patch('/{id:[0-9]+}', '\App\v1\Controllers\ProductController:updateProduct');
     });
 
     /**

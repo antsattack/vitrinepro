@@ -7,6 +7,8 @@ use Firebase\JWT\JWT;
 use App\Models\Entity\Product;
 use App\Models\Entity\Currency;
 use App\Models\Entity\User;
+use App\Models\Entity\Category;
+use App\Models\Entity\Brand;
 
 
 /**
@@ -116,57 +118,64 @@ class ProductController {
     }
 
     /**
-     * Deleta uma imagem
+     * Atualiza
      * @param [type] $request
      * @param [type] $response
      * @param [type] $args
      * @return Response
      */
-    public function deleteImage($request, $response, $args) {
+    public function updateProduct($request, $response, $args) {
+        $product_id = (int) $args['id'];
+        $product_id = ($product_id) ? $product_id : 0;
 
-        $id = (int) $args['id'];
+        $params = (object) $request->getParams();
 
-        /**
-         * Encontra no Banco
-         */ 
         $entityManager = $this->container->get('em');
-        $imagesRepository = $entityManager->getRepository('App\Models\Entity\Image');
-        $image = $imagesRepository->find($id);
+        $product = $entityManager->find('App\Models\Entity\Product', $product_id);
 
-        /**
-         * Verifica se existe
-         */
-        if (!$image) {
-            $logger = $this->container->get('logger');
-            $logger->warning("Image {$id} Not Found");
-            throw new \Exception("Image not Found", 404);
+        if (strlen($params->title)) {
+            $product->setTitle($params->title);
+        }
+
+        if (strlen($params->description)) {
+            $product->setDescription($params->description);
+        }
+
+        if ($params->category > 0) {
+            //$category = (new Category())->setId($params->category);
+            $category = $entityManager->find('App\Models\Entity\Category', $params->category);
+            $product->setCategory($category);
+        }
+
+        if ($params->brand > 0) {
+            //$brand = (new Brand())->setId($params->brand);
+            $brand = $entityManager->find('App\Models\Entity\Brand', $params->brand);
+            $product->setBrand($brand);
+        }
+
+        if (strlen($params->model)) {
+            $product->setModel($params->model);
+        }
+
+        if (strlen($params->price)) {
+            $product->setPrice($params->price);
+        }
+
+        if (strlen($params->new)) {
+            $product->setNew($params->new);
+        }
+
+        if (strlen($params->quantity)) {
+            $product->setQuantity($params->quantity);
         }
 
         /**
-         * Remove a imagem do S3
+         * Persiste a entidade no banco de dados
          */
-        $clientS3 = S3Client::factory(array(
-            'key' => AKANTSATTACK,
-            'secret' => SKANTSATTACK
-        ));
-        $clientS3->setRegion('sa-east-1');
-
-        $name = $image->prefix."/".$image->product->id."_".$image->id.".jpg";
-
-        $resp = $clientS3->deleteObject(array(
-            'Bucket' => "images.antsattack.com",
-            'Key'    => $name,
-            'RequestPayer' => 'requester',
-        ));
-
-        /**
-         * Remove a entidade
-         */
-        $entityManager->remove($image);
+        $entityManager->persist($product);
         $entityManager->flush();
-
-        $return = $response->withJson(['msg' => "Deleting the image {$id}"], 204)
+        $return = $response->withJson($product->getId(), 201)
             ->withHeader('Content-type', 'application/json');
         return $return;
-    }
+    } 
 }
