@@ -142,4 +142,18 @@ class Image
     {
         return $this->id;
     }
+
+    /**
+     * Set the value of id
+     *
+     * @param  string|null  $id
+     *
+     * @return  self
+     */ 
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 }

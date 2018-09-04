@@ -213,6 +213,51 @@ class ImageController {
         }
         return $return;
     }
+    
+    /**
+     * Torna uma imagem a principal
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return Response
+     */
+    public function setMainImage($request, $response, $args) {
+        $product_id = (int) $args['product_id'];
+        $product_id = ($product_id) ? $product_id : 0;
+        //$product = (new Product())->setId($product_id);
+
+        $params = (object) $request->getParams();
+        $entityManager = $this->container->get('em');
+        $entityManager->getConnection()->beginTransaction();
+        try {
+
+            $qb = $entityManager->createQueryBuilder();
+            $q = $qb->update('App\Models\Entity\Image', 'i')
+                    ->set('i.main', 0)
+                    ->where('i.product = (:product_id)')
+                    ->setParameter('product_id', $product_id)
+                    ->getQuery();
+            $p = $q->execute();
+
+            $qb = $entityManager->createQueryBuilder();
+            $q = $qb->update('App\Models\Entity\Image', 'i')
+                    ->set('i.main', 1)
+                    ->where('i.id = ?1')
+                    ->setParameter(1, $params->image_id)
+                    ->getQuery();
+            $p = $q->execute();
+
+            $entityManager->getConnection()->commit();
+
+            $return = $response->withJson(1, 201)
+                    ->withHeader('Content-type', 'application/json');
+        } catch(\Exception $e){
+            $entityManager->getConnection()->rollBack();
+            $return = $response->withJson($e->getMessage(), 500)
+                ->withHeader('Content-type', 'application/json');
+        }
+        return $return;
+    }
 
     /**
      * Deleta uma imagem
