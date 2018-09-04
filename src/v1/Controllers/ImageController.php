@@ -199,7 +199,7 @@ class ImageController {
 
                 unlink($reduced);
             }
-            $ret = "http://images.antsattack.com/ssc/".$name;
+            $ret = "http://images.antsattack.com/".$name;
 
             $entityManager->getConnection()->commit();
 
