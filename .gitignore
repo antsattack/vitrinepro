@@ -2,6 +2,7 @@ composer.phar
 composer.json
 composer.lock
 /vendor/
+/log/
 
 # Backup entities generated with doctrine:generate:entities command
 **/Entity/*~
