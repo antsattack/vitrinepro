@@ -98,10 +98,10 @@ class ProductController {
         $prdObj->price = (float) $product->price;
         $prdObj->new = $product->new;
         $prdObj->quantity = $product->quantity;
-        $prdObj->brand_id = $product->brand->id;
-        $prdObj->category_id = $product->category->id;
-        $prdObj->currency_id = $product->currency->id;
-        $prdObj->seller_id = $product->seller->id;
+        $prdObj->brand = $product->brand->id;
+        $prdObj->category = $product->category->id;
+        $prdObj->currency = $product->currency->id;
+        $prdObj->seller = $product->seller->id;
 
         $query = $entityManager->createQuery("
             SELECT 
