@@ -9,6 +9,8 @@ use App\Models\Entity\Currency;
 use App\Models\Entity\User;
 use App\Models\Entity\Category;
 use App\Models\Entity\Brand;
+use App\Models\Entity\Tag;
+use \Doctrine\Common\Collections\Collection;
 
 
 /**
@@ -167,6 +169,14 @@ class ProductController {
 
         if (strlen($params->quantity)) {
             $product->setQuantity($params->quantity);
+        }
+
+        if (count($params->tag)) {
+            $listTags = array();
+            foreach($params->tag AS $tag){
+                $listTags[] = $entityManager->find('App\Models\Entity\Tag', $tag);
+            }
+            $product->setTag($listTags);
         }
 
         /**

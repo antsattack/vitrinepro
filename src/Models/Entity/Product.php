@@ -3,6 +3,7 @@
 
 
 namespace App\Models\Entity;
+use \Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Product
@@ -365,6 +366,31 @@ class Product
     public function setQuantity($quantity)
     {
         $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of tag
+     *
+     * @return  \Doctrine\Common\Collections\Collection
+     */ 
+    public function getTag()
+    {
+        return $this->tag;
+    }
+
+    /**
+     * Set the value of tag
+     *
+     * @param  \Doctrine\Common\Collections\Collection  $tag
+     *
+     * @return  self
+     */ 
+    public function setTag($tag)
+    {
+        $tag = new ArrayCollection($tag);
+        $this->tag = $tag;
 
         return $this;
     }

@@ -5,6 +5,7 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 use App\Models\Entity\Tag;
+use App\Models\Entity\ProductTag;
 
 /**
  * Controller v1
@@ -67,4 +68,29 @@ class TagController {
             ->withHeader('Content-type', 'application/json');
         return $return;
     }
+
+    /**
+     * Add
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return Response
+     */
+    /*public function addTagsToProduct($request, $response, $args) {
+        
+        $product_id = (int) $args['product_id'];
+        $product_id = ($product_id) ? $product_id : 0;
+
+        $entityManager = $this->container->get('em'); 
+        
+        $product = (new Product())->setTitle($params->title)
+            ->setDescription($params->description)
+            ->setCurrency($currency)
+            ->setSeller($seller);
+        
+        
+        $return = $response->withJson($tags, 200)
+            ->withHeader('Content-type', 'application/json');
+        return $return;
+    }*/
 }

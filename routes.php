@@ -58,6 +58,7 @@ $app->group('/v1', function() {
      */
     $this->group('/tags', function() {
         $this->get('/category/{category_id:[0-9]+}', '\App\v1\Controllers\TagController:listTagByCategory');
+        //$this->patch('/product/{product_id:[0-9]+}', '\App\v1\Controllers\TagController:addTagsToProduct');
     });
 
     /**
