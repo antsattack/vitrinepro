@@ -389,8 +389,33 @@ class Product
      */ 
     public function setTag($tag)
     {
-        $tag = new ArrayCollection($tag);
-        $this->tag = $tag;
+        $tagCollection = new ArrayCollection($tag);
+        $this->tag = $tagCollection;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of attribute
+     *
+     * @return  \Doctrine\Common\Collections\Collection
+     */ 
+    public function getAttribute()
+    {
+        return $this->attribute;
+    }
+
+    /**
+     * Set the value of attribute
+     *
+     * @param  \Doctrine\Common\Collections\Collection  $attribute
+     *
+     * @return  self
+     */ 
+    public function setAttribute($attribute)
+    {
+        $attributeCollection = new ArrayCollection($attribute);
+        $this->attribute = $attributeCollection;
 
         return $this;
     }

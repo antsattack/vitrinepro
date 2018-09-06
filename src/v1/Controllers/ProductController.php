@@ -10,6 +10,8 @@ use App\Models\Entity\User;
 use App\Models\Entity\Category;
 use App\Models\Entity\Brand;
 use App\Models\Entity\Tag;
+use App\Models\Entity\Attribute;
+use App\Models\Entity\Datasheet;
 use \Doctrine\Common\Collections\Collection;
 
 
@@ -133,59 +135,91 @@ class ProductController {
         $params = (object) $request->getParams();
 
         $entityManager = $this->container->get('em');
-        $product = $entityManager->find('App\Models\Entity\Product', $product_id);
+        $entityManager->getConnection()->beginTransaction();
+        try {
+            $product = $entityManager->find('App\Models\Entity\Product', $product_id);
 
-        if (strlen($params->title)) {
-            $product->setTitle($params->title);
-        }
-
-        if (strlen($params->description)) {
-            $product->setDescription($params->description);
-        }
-
-        if ($params->category > 0) {
-            //$category = (new Category())->setId($params->category);
-            $category = $entityManager->find('App\Models\Entity\Category', $params->category);
-            $product->setCategory($category);
-        }
-
-        if ($params->brand > 0) {
-            //$brand = (new Brand())->setId($params->brand);
-            $brand = $entityManager->find('App\Models\Entity\Brand', $params->brand);
-            $product->setBrand($brand);
-        }
-
-        if (strlen($params->model)) {
-            $product->setModel($params->model);
-        }
-
-        if (strlen($params->price)) {
-            $product->setPrice($params->price);
-        }
-
-        if (strlen($params->new)) {
-            $product->setNew($params->new);
-        }
-
-        if (strlen($params->quantity)) {
-            $product->setQuantity($params->quantity);
-        }
-
-        if (count($params->tag)) {
-            $listTags = array();
-            foreach($params->tag AS $tag){
-                $listTags[] = $entityManager->find('App\Models\Entity\Tag', $tag);
+            if (strlen($params->title)) {
+                $product->setTitle($params->title);
             }
-            $product->setTag($listTags);
-        }
 
-        /**
-         * Persiste a entidade no banco de dados
-         */
-        $entityManager->persist($product);
-        $entityManager->flush();
-        $return = $response->withJson($product->getId(), 201)
-            ->withHeader('Content-type', 'application/json');
+            if (strlen($params->description)) {
+                $product->setDescription($params->description);
+            }
+
+            if ($params->category > 0) {
+                //$category = (new Category())->setId($params->category);
+                $category = $entityManager->find('App\Models\Entity\Category', $params->category);
+                $product->setCategory($category);
+            }
+
+            if ($params->brand > 0) {
+                //$brand = (new Brand())->setId($params->brand);
+                $brand = $entityManager->find('App\Models\Entity\Brand', $params->brand);
+                $product->setBrand($brand);
+            }
+
+            if (strlen($params->model)) {
+                $product->setModel($params->model);
+            }
+
+            if (strlen($params->price)) {
+                $product->setPrice($params->price);
+            }
+
+            if (strlen($params->new)) {
+                $product->setNew($params->new);
+            }
+
+            if (strlen($params->quantity)) {
+                $product->setQuantity($params->quantity);
+            }
+
+            if (count($params->tag)) {
+                $listTags = array();
+                foreach($params->tag AS $tag){
+                    $listTags[] = $entityManager->find('App\Models\Entity\Tag', $tag);
+                }
+                $product->setTag($listTags);
+            }
+
+            if (count($params->datasheet)) {
+                $listAttrs = array();
+                foreach($params->datasheet AS $datasheet){
+                    $listAttrs[] = $entityManager->find('App\Models\Entity\Attribute', $datasheet['id']);
+                }
+                $product->setAttribute($listAttrs);
+            }
+
+            /**
+             * Persiste a entidade no banco de dados
+             */
+            $entityManager->persist($product);
+            $entityManager->flush();
+
+            foreach($params->datasheet AS $datasheet){
+                $entityDatasheet = $entityManager->find('App\Models\Entity\Datasheet', array(
+                    "product" => $product_id,
+                    "attribute" => $datasheet["id"]
+                ));
+                $entityDatasheet->setValue($datasheet["value"]);
+                $entityManager->persist($entityDatasheet);
+            }
+
+            $entityManager->flush();
+
+            $return_val = $product->getId();
+
+            $entityManager->getConnection()->commit();
+
+            $return = $response->withJson($return_val, 201)
+                ->withHeader('Content-type', 'application/json');
+
+        } catch(\Exception $e){
+            $entityManager->getConnection()->rollBack();
+            $return = $response->withJson($e->getMessage(), 500)
+                ->withHeader('Content-type', 'application/json');
+        }
         return $return;
     } 
 }
