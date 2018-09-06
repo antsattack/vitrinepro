@@ -95,7 +95,7 @@ class ProductController {
         $prdObj->title = $product->title;
         $prdObj->description = $product->description;
         $prdObj->model = $product->model;
-        $prdObj->price = $product->price;
+        $prdObj->price = (float) $product->price;
         $prdObj->new = $product->new;
         $prdObj->quantity = $product->quantity;
         $prdObj->brand_id = $product->brand->id;
