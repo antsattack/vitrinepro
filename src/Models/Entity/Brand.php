@@ -62,4 +62,33 @@ class Brand
         return $this;
     }
 
+    /**
+     * Get the value of name
+     *
+     * @return  string|null
+     */ 
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Get the value of category
+     *
+     * @return  \App\Models\Entity\Category
+     */ 
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @return App\Models\Entity\Brand
+     */
+    public function getValues() {
+        return get_object_vars($this);
+    }
+
+
+    
 }

@@ -9,6 +9,7 @@ $app->group('/v1', function() {
      * Dentro de v1, o recurso /products
      */
     $this->group('/products', function() {
+        $this->get('/{id:[0-9]+}', '\App\v1\Controllers\ProductController:viewProduct');
         $this->post('', '\App\v1\Controllers\ProductController:createProduct');
         $this->patch('/{id:[0-9]+}', '\App\v1\Controllers\ProductController:updateProduct');
     });

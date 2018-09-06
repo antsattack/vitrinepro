@@ -78,6 +78,72 @@ class ProductController {
     }
 
     /**
+     * Ver
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return Response
+     */
+    public function viewProduct($request, $response, $args) {
+        $product_id = (int) $args['id'];
+        $product_id = ($product_id) ? $product_id : 0;
+        $entityManager = $this->container->get('em');
+        $product = $entityManager->find('App\Models\Entity\Product', $product_id);
+
+        $prdObj = new \stdClass();
+        $prdObj->id = $product->id;
+        $prdObj->title = $product->title;
+        $prdObj->description = $product->description;
+        $prdObj->model = $product->model;
+        $prdObj->price = $product->price;
+        $prdObj->new = $product->new;
+        $prdObj->quantity = $product->quantity;
+        $prdObj->brand_id = $product->brand->id;
+        $prdObj->category_id = $product->category->id;
+        $prdObj->currency_id = $product->currency->id;
+        $prdObj->seller_id = $product->seller->id;
+
+        $query = $entityManager->createQuery("
+            SELECT 
+                t.id
+            FROM 
+                App\Models\Entity\Tag t
+                JOIN t.product p
+            WHERE
+                p.id = $product_id
+            ORDER BY
+                t.id
+        ");
+        $tags = $query->getResult();
+        $tagsList = array();
+        foreach($tags AS $tag) $tagsList[] = $tag["id"];
+
+        $query = $entityManager->createQuery("
+            SELECT 
+                d.attribute AS id,
+                d.value
+            FROM 
+                App\Models\Entity\Datasheet d
+            WHERE
+                d.product = $product_id
+        ");
+        $datasheet = $query->getResult();
+        $datasheetList = array();
+        foreach($datasheet AS $item) {
+            $datasheetList[] = array(
+                "id" => (int) $item["id"],
+                "value" => $item["value"]
+            );
+        }
+        $prdObj->datasheet = $datasheetList;
+        $prdObj->tags = $tagsList;
+
+        $return = $response->withJson($prdObj, 200)
+            ->withHeader('Content-type', 'application/json');
+        return $return;
+    }
+
+    /**
      * Cria
      * @param [type] $request
      * @param [type] $response
