@@ -40,14 +40,14 @@ class Attribute
      *
      * @Column(name="register", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
-    public $register = 'CURRENT_TIMESTAMP';
+    //public $register = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \DateTime|null
      *
      * @Column(name="exclusion", type="datetime", nullable=true)
      */
-    public $exclusion;
+    //public $exclusion;
 
     /**
      * @var string|null
