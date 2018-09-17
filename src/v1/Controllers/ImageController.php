@@ -114,6 +114,11 @@ class ImageController {
             $files = $files['file'];
 
             foreach ($files AS $file){
+
+                if (($file->getSize() > 2097152)){
+                    throw new \Exception("Arquivo da imagem deve ter menos que 2MB de tamanho.", 2);
+                }
+
                 /**
                  * Persiste a entidade no banco de dados
                  */
