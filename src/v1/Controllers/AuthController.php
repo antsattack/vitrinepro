@@ -42,13 +42,14 @@ class AuthController {
 
     $entityManager = $this->container->get('em');
     $usersRepository = $entityManager->getRepository('App\Models\Entity\User');
-    $users = $usersRepository->findBy(array('name' => $params->user));
+    $users = $usersRepository->findBy(array('email' => $params->user));
     $user = $users[0];
 
     if (password_verify($params->passwd, $user->passwd)){
         $token = array(
-            "userid" => $user->id,
-            "username" => $user->description
+            "id" => $user->id,
+            "name" => $user->name,
+            "email" => $user->email
         );
 
         $jwt = JWT::encode($token, $key, 'HS512');

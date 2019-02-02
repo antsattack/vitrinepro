@@ -24,16 +24,16 @@ class User
     /**
      * @var string|null
      *
-     * @Column(name="name", type="string", length=255, nullable=true)
+     * @Column(name="email", type="string", length=255, nullable=true)
      */
-    public $name;
+    public $email;
 
     /**
      * @var string|null
      *
-     * @Column(name="description", type="text", length=65535, nullable=true)
+     * @Column(name="name", type="text", length=65535, nullable=true)
      */
-    public $description;
+    public $name;
 
     /**
      * @var string|null
