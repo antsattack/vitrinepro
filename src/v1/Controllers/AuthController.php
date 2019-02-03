@@ -54,7 +54,7 @@ class AuthController {
 
         $jwt = JWT::encode($token, $key, 'HS512');
 
-        return $response->withJson(["auth-jwt" => $jwt], 200)
+        return $response->withJson(["token" => $jwt], 200)
             ->withHeader('Content-type', 'application/json');
     } else{
         return $response->withStatus(401);
