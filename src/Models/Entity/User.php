@@ -89,6 +89,30 @@ class User
     }
 
     /**
+     * Get the value of email
+     *
+     * @return  string|null
+     */ 
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set the value of email
+     *
+     * @param  string|null  $email
+     *
+     * @return  self
+     */ 
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
      * Get the value of name
      *
      * @return  string|null
@@ -96,5 +120,40 @@ class User
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set the value of name
+     *
+     * @param  string|null  $name
+     *
+     * @return  self
+     */ 
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of passwd
+     *
+     * @param  string|null  $passwd
+     *
+     * @return  self
+     */ 
+    public function setPasswd($passwd)
+    {
+        $this->passwd = $passwd;
+
+        return $this;
+    }
+
+    /**
+     * @return App\Models\Entity\User
+     */
+    public function getValues() {
+        return get_object_vars($this);
     }
 }

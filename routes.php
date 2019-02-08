@@ -5,33 +5,35 @@
  */
 $app->group('/v1', function() {
 
-    /**
-     * Dentro de v1, o recurso /products
-     */
-    $this->group('/products', function() {
-        $this->get('/{id:[0-9]+}', '\App\v1\Controllers\ProductController:viewProduct');
-        $this->post('', '\App\v1\Controllers\ProductController:createProduct');
-        $this->patch('/{id:[0-9]+}', '\App\v1\Controllers\ProductController:updateProduct');
+    $this->group('/advisors', function() {
+        $this->get('/{id:[0-9]+}', '\App\v1\Controllers\AdvisorController:listAdvisor');
     });
 
-    /**
-     * Dentro de v1, o recurso /colors
-     */
+    $this->group('/auth', function() {
+        $this->post('', \App\v1\Controllers\AuthController::class);
+    });
+
+    $this->group('/brands', function() {
+        $this->get('/category/{category_id:[0-9]+}', '\App\v1\Controllers\BrandController:listBrand');
+    });
+
+    $this->group('/categories', function() {
+        $this->get('', '\App\v1\Controllers\CategoryController:listCategory');
+        $this->get('/{parent_id:[0-9]+}', '\App\v1\Controllers\CategoryController:listCategory');
+    });
+
     $this->group('/colors', function() {
         $this->get('', '\App\v1\Controllers\ColorController:listColor');
         $this->post('', '\App\v1\Controllers\ColorController:createColor');
-        
-        /**
-         * Validando se tem um integer no final da URL
-         */
         $this->get('/{id:[0-9]+}', '\App\v1\Controllers\ColorController:viewColor');
         $this->put('/{id:[0-9]+}', '\App\v1\Controllers\ColorController:updateColor');
         $this->delete('/{id:[0-9]+}', '\App\v1\Controllers\ColorController:deleteColor');
     });
 
-    /**
-     * Dentro de v1, o recurso /images
-     */
+    $this->group('/datasheets', function() {
+        $this->get('/category/{category_id:[0-9]+}', '\App\v1\Controllers\DatasheetController:listDatasheetByCategory');
+    });
+
     $this->group('/images', function() {
         $this->get('/product/{product_id:[0-9]+}', '\App\v1\Controllers\ImageController:listImage');
         $this->patch('/main/product/{product_id:[0-9]+}', '\App\v1\Controllers\ImageController:setMainImage');
@@ -39,54 +41,29 @@ $app->group('/v1', function() {
         $this->delete('/{id:[0-9]+}', '\App\v1\Controllers\ImageController:deleteImage');
     });
 
-    /**
-     * Dentro de v1, o recurso /categories
-     */
-    $this->group('/categories', function() {
-        $this->get('', '\App\v1\Controllers\CategoryController:listCategory');
-        $this->get('/{parent_id:[0-9]+}', '\App\v1\Controllers\CategoryController:listCategory');
+    $this->group('/products', function() {
+        $this->get('/{id:[0-9]+}', '\App\v1\Controllers\ProductController:viewProduct');
+        $this->post('', '\App\v1\Controllers\ProductController:createProduct');
+        $this->patch('/{id:[0-9]+}', '\App\v1\Controllers\ProductController:updateProduct');
     });
 
-    /**
-     * Dentro de v1, o recurso /brands
-     */
-    $this->group('/brands', function() {
-        $this->get('/category/{category_id:[0-9]+}', '\App\v1\Controllers\BrandController:listBrand');
-    });
-
-    /**
-     * Dentro de v1, o recurso /tags
-     */
     $this->group('/tags', function() {
         $this->get('/category/{category_id:[0-9]+}', '\App\v1\Controllers\TagController:listTagByCategory');
     });
 
-    /**
-     * Dentro de v1, o recurso /datasheets
-     */
-    $this->group('/datasheets', function() {
-        $this->get('/category/{category_id:[0-9]+}', '\App\v1\Controllers\DatasheetController:listDatasheetByCategory');
-    });
-
-    /**
-     * Dentro de v1, o recurso /transactions
-     */
     $this->group('/transactions', function() {
         $this->get('', '\App\v1\Controllers\TransactionController:listTransaction');
     });
 
-    /**
-     * Dentro de v1, o recurso /advisors
-     */
-    $this->group('/advisors', function() {
-        $this->get('/{id:[0-9]+}', '\App\v1\Controllers\AdvisorController:listAdvisor');
+    $this->group('/usercreate', function() {
+        $this->post('', '\App\v1\Controllers\UserController:createUser');
     });
 
-    /**
-     * Dentro de v1, o recurso /auth
-     */
-    $this->group('/auth', function() {
-        $this->post('', \App\v1\Controllers\AuthController::class);
+    $this->group('/users', function() {
+        $this->get('', '\App\v1\Controllers\UserController:listUser');
+        $this->get('/{id:[0-9]+}', '\App\v1\Controllers\UserController:viewUser');
+        $this->put('/{id:[0-9]+}', '\App\v1\Controllers\UserController:updateUser');
+        $this->delete('/{id:[0-9]+}', '\App\v1\Controllers\UserController:deleteUser');
     });
 });
 
