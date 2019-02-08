@@ -96,7 +96,7 @@ class UserController {
              */
             $user = (new User())->setName($params->name)
                 ->setEmail($params->email)
-                ->setPassword(password_hash($params->password, PASSWORD_DEFAULT));
+                ->setPasswd(password_hash($params->password, PASSWORD_DEFAULT));
             /**
              * Registra a criação
              */
