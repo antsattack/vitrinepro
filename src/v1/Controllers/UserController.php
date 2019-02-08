@@ -69,7 +69,7 @@ class UserController {
             $returnVal["error"][] = "Senhas não coincidem.";
         }
         ////////
-        $query = $entityManager->createQuery("SELECT 1 FROM App\Models\Entity\User WHERE email = $params->email");
+        $query = $entityManager->createQuery("SELECT 1 FROM App\Models\Entity\User WHERE email = " .$params->email);
         $usersResult = $query->getResult();
         if (count($usersResult)==0){
             $emailAlreadyRegistered = false;
