@@ -108,7 +108,16 @@ class UserController {
              */
             $entityManager->persist($user);
             $entityManager->flush();
-            return $response->withJson($user, 201)
+            
+            $token = array(
+                "id" => $user->id,
+                "name" => $user->name,
+                "email" => $user->email
+            );
+    
+            $jwt = JWT::encode($token, $key, 'HS512');
+    
+            return $response->withJson(["token" => $jwt], 200)
                 ->withHeader('Content-type', 'application/json');
         } else {
             return $response->withJson($validation, 201)
