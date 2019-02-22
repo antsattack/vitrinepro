@@ -142,7 +142,9 @@ class UserController {
         //$user = $usersRepository->find($id); 
         $query = $entityManager->createQuery("
             SELECT 
-                *
+                u.id,
+                u.name,
+                u.email
             FROM 
                 App\Models\Entity\User u
             WHERE
