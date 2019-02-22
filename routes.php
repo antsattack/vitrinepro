@@ -35,7 +35,7 @@ $app->group('/v1', function() {
     });
 
     $this->group('/getuserbyemail', function() {
-        $this->get('/{email:[.]+}', '\App\v1\Controllers\UserController:getUserByEmail');
+        $this->get('/{email:[a-zA-Z0-9_-@.]+}', '\App\v1\Controllers\UserController:getUserByEmail');
     });
 
     $this->group('/images', function() {
