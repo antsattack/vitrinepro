@@ -127,6 +127,44 @@ class UserController {
     }
 
     /**
+     * Retorna usuário pelo email
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return Response
+     */
+    public function getUserByEmail($request, $response, $args) {
+
+        $email = (strlen($args['email'])) ? $args['email'] : "";
+
+        $entityManager = $this->container->get('em');
+        //$usersRepository = $entityManager->getRepository('App\Models\Entity\User');
+        //$user = $usersRepository->find($id); 
+        $query = $entityManager->createQuery("
+            SELECT 
+                *
+            FROM 
+                App\Models\Entity\User u
+            WHERE
+                u.email = '$email'
+        ");
+        $userResponse = $query->getResult();
+
+        /**
+         * Verifica se existe um item com a ID informada
+         */
+        if (!count($userResponse)) {
+            $logger = $this->container->get('logger');
+            $logger->warning("User {$email} Not Found");
+            throw new \Exception("User not Found", 404);
+        }    
+
+        $return = $response->withJson($userResponse, 200)
+            ->withHeader('Content-type', 'application/json');
+        return $return;   
+    }
+
+        /**
      * Exibe as informações de um item
      * @param [type] $request
      * @param [type] $response

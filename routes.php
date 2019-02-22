@@ -34,6 +34,10 @@ $app->group('/v1', function() {
         $this->get('/category/{category_id:[0-9]+}', '\App\v1\Controllers\DatasheetController:listDatasheetByCategory');
     });
 
+    $this->group('/getuserbyemail', function() {
+        $this->get('/{id:[a-zA-Z0-9@]+}', '\App\v1\Controllers\UserController:getUserByEmail');
+    });
+
     $this->group('/images', function() {
         $this->get('/product/{product_id:[0-9]+}', '\App\v1\Controllers\ImageController:listImage');
         $this->patch('/main/product/{product_id:[0-9]+}', '\App\v1\Controllers\ImageController:setMainImage');
