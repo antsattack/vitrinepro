@@ -111,99 +111,100 @@ class ImageController {
                 throw new \Exception("File not uploaded", 1);
             }
 
-            $files = $files['file'];
+            $file = $files['file'];
 
-            foreach ($files AS $file){
+            //foreach ($files AS $file){
 
-                if (($file->getSize() > 2097152)){
-                    throw new \Exception("Arquivo da imagem deve ter menos que 2MB de tamanho.", 2);
-                }
+            /*if (($file->getSize() > 2097152)){
+                throw new \Exception("Arquivo da imagem deve ter menos que 2MB de tamanho.", 2);
+            }*/
 
-                /**
-                 * Persiste a entidade no banco de dados
-                 */
-                $attachedImage = $entityManager->merge($image);
-                $entityManager->flush();
+            /**
+             * Persiste a entidade no banco de dados
+             */
+            $attachedImage = $entityManager->merge($image);
+            $entityManager->flush();
 
-                $novoId = $attachedImage->getId();
+            $novoId = $attachedImage->getId();
 
-                if (!($novoId > 0)) {
-                    throw new \Exception("Não persistiu", 1);
-                }
-
-                $name = $prefix."/".$params->product."_".$novoId.".jpg";
-
-                $tmpname = $file->file;
-
-                /**
-                 * reduzir arquivo
-                 */
-                $info = getimagesize($tmpname);
-
-                if ($info['mime'] == 'image/jpeg'){
-                    $newImage = imagecreatefromjpeg($tmpname);
-                }
-                elseif ($info['mime'] == 'image/gif'){
-                    $newImage = imagecreatefromgif($tmpname);
-                }
-                elseif ($info['mime'] == 'image/png'){
-                    $newImage = imagecreatefrompng($tmpname);
-                }
-                $reduced = "/tmp/temp.jpg";
-
-                $largura = 500;
-                
-                $largura_original = imagesX($newImage);
-                $altura_original = imagesY($newImage);
-
-                if ($altura_original > $largura_original){
-                    $altura_nova = (int) ($altura_original * $largura)/$largura_original;
-                    $imgReduced = imagecreatetruecolor($largura,$altura_nova);
-
-                    imagecopyresampled($imgReduced, $newImage, 0, 0, 0, 0, $largura, $altura_nova, $largura_original,  $altura_original);
-                    $desloc = ($altura_nova/2)-($largura/2);
-
-                    //crop
-                    $size = min(imagesx($imgReduced), imagesy($imgReduced));
-                    $imgCropped = imagecrop($imgReduced, ['x' => 0, 'y' => $desloc, 'width' => $size, 'height' => $size]);
-
-                } else{
-                    $largura_nova = (int) ($largura_original * $largura)/$altura_original;
-                    $imgReduced = imagecreatetruecolor($largura_nova,$largura);
-
-                    imagecopyresampled($imgReduced, $newImage, 0, 0, 0, 0, $largura_nova, $largura, $largura_original,  $altura_original);
-                    $desloc = ($largura_nova/2)-($largura/2);
-
-                    //crop
-                    $size = min(imagesx($imgReduced), imagesy($imgReduced));
-                    $imgCropped = imagecrop($imgReduced, ['x' => $desloc, 'y' => 0, 'width' => $size, 'height' => $size]);
-                }
-
-                imagejpeg($imgCropped, $reduced, 100);
-                imagedestroy($imgCropped);
-                imagedestroy($imgReduced);
-                chmod($reduced,0777);
- 
-                /**
-                 * cria o objeto do cliente S3, necessita passar as credenciais da AWS
-                 */ 
-                $clientS3 = S3Client::factory(array(
-                    'key' => AKANTSATTACK,
-                    'secret' => SKANTSATTACK
-                ));
-                $clientS3->setRegion('sa-east-1');
-
-                /**
-                 * método putObject envia os dados pro bucket selecionado
-                 */
-                $resp = $clientS3->putObject(array(
-                    'Bucket' => "images.antsattack.com",
-                    'Key' => $name,
-                    'SourceFile' => $reduced
-                ));
-
-                unlink($reduced);
+            if (!($novoId > 0)) {
+                throw new \Exception("Não persistiu", 1);
             }
+
+            $name = $prefix."/".$params->product."_".$novoId.".jpg";
+
+            //$tmpname = $file->file;
+
+            /**
+             * reduzir arquivo
+             */
+            /*$info = getimagesize($tmpname);
+
+            if ($info['mime'] == 'image/jpeg'){
+                $newImage = imagecreatefromjpeg($tmpname);
+            }
+            elseif ($info['mime'] == 'image/gif'){
+                $newImage = imagecreatefromgif($tmpname);
+            }
+            elseif ($info['mime'] == 'image/png'){
+                $newImage = imagecreatefrompng($tmpname);
+            }*/
+            $newImage = imagecreatefromstring($image);
+            $reduced = "/tmp/temp.jpg";
+
+            $largura = 500;
+            
+            $largura_original = imagesX($newImage);
+            $altura_original = imagesY($newImage);
+
+            if ($altura_original > $largura_original){
+                $altura_nova = (int) ($altura_original * $largura)/$largura_original;
+                $imgReduced = imagecreatetruecolor($largura,$altura_nova);
+
+                imagecopyresampled($imgReduced, $newImage, 0, 0, 0, 0, $largura, $altura_nova, $largura_original,  $altura_original);
+                $desloc = ($altura_nova/2)-($largura/2);
+
+                //crop
+                $size = min(imagesx($imgReduced), imagesy($imgReduced));
+                $imgCropped = imagecrop($imgReduced, ['x' => 0, 'y' => $desloc, 'width' => $size, 'height' => $size]);
+
+            } else{
+                $largura_nova = (int) ($largura_original * $largura)/$altura_original;
+                $imgReduced = imagecreatetruecolor($largura_nova,$largura);
+
+                imagecopyresampled($imgReduced, $newImage, 0, 0, 0, 0, $largura_nova, $largura, $largura_original,  $altura_original);
+                $desloc = ($largura_nova/2)-($largura/2);
+
+                //crop
+                $size = min(imagesx($imgReduced), imagesy($imgReduced));
+                $imgCropped = imagecrop($imgReduced, ['x' => $desloc, 'y' => 0, 'width' => $size, 'height' => $size]);
+            }
+
+            imagejpeg($imgCropped, $reduced, 100);
+            imagedestroy($imgCropped);
+            imagedestroy($imgReduced);
+            chmod($reduced,0777);
+
+            /**
+             * cria o objeto do cliente S3, necessita passar as credenciais da AWS
+             */ 
+            $clientS3 = S3Client::factory(array(
+                'key' => AKANTSATTACK,
+                'secret' => SKANTSATTACK
+            ));
+            $clientS3->setRegion('sa-east-1');
+
+            /**
+             * método putObject envia os dados pro bucket selecionado
+             */
+            $resp = $clientS3->putObject(array(
+                'Bucket' => "images.antsattack.com",
+                'Key' => $name,
+                'SourceFile' => $reduced
+            ));
+
+            unlink($reduced);
+            //}
             $ret = "http://images.antsattack.com/".$name;
 
             $entityManager->getConnection()->commit();
