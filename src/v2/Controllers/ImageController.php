@@ -149,7 +149,7 @@ class ImageController {
             elseif ($info['mime'] == 'image/png'){
                 $newImage = imagecreatefrompng($tmpname);
             }*/
-            $newImage = imagecreatefromstring(base64_decode($image));
+            $newImage = imagecreatefromstring(base64_decode($file));
             $reduced = "/tmp/temp.jpg";
 
             $largura = 500;
