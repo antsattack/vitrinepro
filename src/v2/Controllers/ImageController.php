@@ -111,7 +111,8 @@ class ImageController {
                 throw new \Exception("File not uploaded", 1);
             }
 
-            echo $file = $files;//['file'];
+            //$file = $files['file'];
+            $file = $params->files;
 
             //foreach ($files AS $file){
 
