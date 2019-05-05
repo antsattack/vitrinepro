@@ -112,7 +112,7 @@ class ImageController {
             }
 
             //$file = $files['file'];
-            echo $file = $params->files;
+            $file = $params->files;
 
             //foreach ($files AS $file){
 
@@ -201,7 +201,7 @@ class ImageController {
             $resp = $clientS3->putObject(array(
                 'Bucket' => "images.antsattack.com",
                 'Key' => $name,
-                'Body' => $reduced
+                'SourceFile' => $reduced
             ));
 
             unlink($reduced);
