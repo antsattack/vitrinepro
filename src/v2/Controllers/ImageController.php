@@ -112,7 +112,7 @@ class ImageController {
             }
 
             //$file = $files['file'];
-            $file = $params->files;
+            echo $file = $params->files;
 
             //foreach ($files AS $file){
 
