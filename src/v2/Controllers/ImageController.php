@@ -105,14 +105,14 @@ class ImageController {
                 ->setProduct($product)
                 ->setMain($params->main);
 
-            $files = $request->getUploadedFiles();
+            /*$files = $request->getUploadedFiles();
 
             if (!isset($files)) {
                 throw new \Exception("File not uploaded", 1);
-            }
+            }*/
 
             //$file = $files['file'];
-            $file = $params->files;
+            $file = $params->picture;
 
             //foreach ($files AS $file){
 
