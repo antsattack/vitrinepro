@@ -43,38 +43,38 @@ class ProductController {
      */
     public function listProduct($request, $response, $args) {
 
-        $token = $request->getHeaderLine('X-Token');
-        $data = JWT::decode($token, $this->container->get('secretkey'), array('HS512'));
-        if (!$data->userid){
+        //$token = $request->getHeaderLine('X-Token');
+        //$data = JWT::decode($token, $this->container->get('secretkey'), array('HS512'));
+        /*if (!$data->userid){
             return $response->withStatus(401);
-        }
+        }*/
 
         $entityManager = $this->container->get('em');
         $query = $entityManager->createQuery("
             SELECT 
-                p.id AS product_id
+                p.id AS product_id,
+                p.title AS title,
+                p.description AS description
             FROM 
                 App\Models\Entity\Product p
-                JOIN p.seller s
-            WHERE 
-                s.id = $data->userid
             ORDER BY
                 p.id
         ");
-        /*$images_temp = $query->getResult();
+        $products_temp = $query->getResult();
 
-        $images = [];
+        $products = [];
 
         $i = 0;
-        foreach($images_temp AS $item){
-            $images[$i]['id'] = (int) $item['image_id'];
-            $images[$i]['url'] = "http://images.antsattack.com/".$item['prefix']."/".$item['product_id']."_".$item['image_id'].".jpg";
+        foreach($products_temp AS $item){
+            $products[$i]['id'] = (int) $item['product_id'];
+            $products[$i]['title'] = $item['title'];
+            $products[$i]['description'] = $item['description'];
             $i++;
         }
 
-        $return = $response->withJson($images, 200)
+        $return = $response->withJson($products, 200)
             ->withHeader('Content-type', 'application/json');
-        return $return;*/
+        return $return;
     }
 
     /**

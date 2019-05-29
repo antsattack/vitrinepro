@@ -46,6 +46,7 @@ $app->group('/v1', function() {
     });
 
     $this->group('/products', function() {
+        $this->get('', '\App\v1\Controllers\ProductController:listProduct');
         $this->get('/{id:[0-9]+}', '\App\v1\Controllers\ProductController:viewProduct');
         $this->post('', '\App\v1\Controllers\ProductController:createProduct');
         $this->patch('/{id:[0-9]+}', '\App\v1\Controllers\ProductController:updateProduct');
