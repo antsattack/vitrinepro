@@ -199,14 +199,14 @@ class ImageController {
              * método putObject envia os dados pro bucket selecionado
              */
             $resp = $clientS3->putObject(array(
-                'Bucket' => "images.antsattack.com",
+                'Bucket' => "img.shoppingnasuacasa.com.br",
                 'Key' => $name,
                 'SourceFile' => $reduced
             ));
 
             unlink($reduced);
             //}
-            $ret = "http://images.antsattack.com/".$name;
+            $ret = "http://img.shoppingnasuacasa.com.br/".$name;
 
             $entityManager->getConnection()->commit();
 
