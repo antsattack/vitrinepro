@@ -69,7 +69,7 @@ class ImageController {
         foreach($images_temp AS $item){
             $key_image = "image_".$item['image_id'];
             $images[$i]['id'] = (int) $item['image_id'];
-            $images[$i]['url'] = "http://images.antsattack.com/".$item['prefix']."/".$item['product_id']."_".$item['image_id'].".jpg";
+            $images[$i]['url'] = "http://img.shoppingnasuacasa.com.br/".$item['prefix']."/".$item['product_id']."_".$item['image_id'].".jpg";
             $i++;
         }
 
@@ -305,7 +305,7 @@ class ImageController {
         $name = $image->prefix."/".$image->product->id."_".$image->id.".jpg";
 
         $resp = $clientS3->deleteObject(array(
-            'Bucket' => "images.antsattack.com",
+            'Bucket' => "img.shoppingnasuacasa.com.br",
             'Key'    => $name,
             'RequestPayer' => 'requester',
         ));

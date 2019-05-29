@@ -69,7 +69,7 @@ class ImageController {
         foreach($images_temp AS $item){
             $key_image = "image_".$item['image_id'];
             $images[$i]['id'] = (int) $item['image_id'];
-            $images[$i]['url'] = "http://images.antsattack.com/".$item['prefix']."/".$item['product_id']."_".$item['image_id'].".jpg";
+            $images[$i]['url'] = "http://img.shoppingnasuacasa.com.br/".$item['prefix']."/".$item['product_id']."_".$item['image_id'].".jpg";
             $i++;
         }
 
@@ -197,14 +197,14 @@ class ImageController {
                  * método putObject envia os dados pro bucket selecionado
                  */
                 $resp = $clientS3->putObject(array(
-                    'Bucket' => "images.antsattack.com",
+                    'Bucket' => "img.shoppingnasuacasa.com.br",
                     'Key' => $name,
                     'SourceFile' => $reduced
                 ));
 
                 unlink($reduced);
             }
-            $ret = "http://images.antsattack.com/".$name;
+            $ret = "http://img.shoppingnasuacasa.com.br/".$name;
 
             $entityManager->getConnection()->commit();
 
@@ -303,7 +303,7 @@ class ImageController {
         $name = $image->prefix."/".$image->product->id."_".$image->id.".jpg";
 
         $resp = $clientS3->deleteObject(array(
-            'Bucket' => "images.antsattack.com",
+            'Bucket' => "img.shoppingnasuacasa.com.br",
             'Key'    => $name,
             'RequestPayer' => 'requester',
         ));
