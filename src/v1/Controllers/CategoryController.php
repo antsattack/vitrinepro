@@ -201,7 +201,7 @@ class CategoryController {
          * Encontra a category no Banco
          */ 
         $entityManager = $this->container->get('em');
-        $categoriesRepository = $entityManager->getRepository('App\Models\Entity\Color');
+        $categoriesRepository = $entityManager->getRepository('App\Models\Entity\Category');
         $category = $categoriesRepository->find($id);   
 
         /**
