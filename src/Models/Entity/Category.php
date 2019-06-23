@@ -90,6 +90,24 @@ class Category
     }
 
     /**
+     * Set the value of name
+     *
+     * @param  string|null  $name
+     *
+     * @return  self
+     */ 
+    public function setName($name)
+    {
+        if (!$name && !is_string($name)) {
+            throw new \InvalidArgumentException("Name of category is required", 400);
+        }
+        
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
      * @return App\Models\Entity\Category
      */
     public function getValues() {

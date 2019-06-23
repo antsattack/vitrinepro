@@ -20,6 +20,9 @@ $app->group('/v1', function() {
     $this->group('/categories', function() {
         $this->get('', '\App\v1\Controllers\CategoryController:listCategory');
         $this->get('/{parent_id:[0-9]+}', '\App\v1\Controllers\CategoryController:listCategory');
+        $this->post('', '\App\v1\Controllers\CategoryController:createCategory');
+        $this->put('/{id:[0-9]+}', '\App\v1\Controllers\CategoryController:updateCategory');
+        $this->delete('/{id:[0-9]+}', '\App\v1\Controllers\CategoryController:deleteCategory');
     });
 
     $this->group('/colors', function() {
