@@ -38,10 +38,10 @@ class CategoryController {
         $parent_id = ($parent_id) ? $parent_id : 0;
 
         $entityManager = $this->container->get('em');
-        $where = "p.id = c.id";
-        if ($parent_id){
-            $where = "p.id = 0";
-        }
+        //$where = "p.id = c.id";
+        //if ($parent_id){
+            $where = "p.id = 0 AND c.id != 0";
+        //}
         $dql = "
             SELECT 
             c.id AS id,
