@@ -20,7 +20,7 @@ $configs = [
     ],
     'appsettings' => [
         'prefix' => 'ssc',
-        'url' => 'http://images.antsattack.com'
+        'url' => 'http://images.rankforms.com'
     ]
 ];
 
@@ -107,16 +107,16 @@ $cnf['local']['pwd'] = 'root';
 $cnf['local']['host'] = '127.0.0.1';
 $cnf['local']['port'] = '8889';
 
-$cnf['aws']['user'] = 'vitrinepro';
+$cnf['aws']['user'] = 'catalog';
 $cnf['aws']['pwd'] = BDPSWD;
-$cnf['aws']['host'] = 'vitrinepro.cyur6u9cx6vc.sa-east-1.rds.amazonaws.com';
+$cnf['aws']['host'] = 'catalog.ctrbgjpzm11w.sa-east-1.rds.amazonaws.com';
 $cnf['aws']['port'] = '3306';
 
 $env = ENVIR;
 $env = "aws";
 
 $conn = array(
-    'dbname' => 'vitrinepro',
+    'dbname' => 'catalog',
     'user' => $cnf[$env]['user'],
     'password' => $cnf[$env]['pwd'],
     'host' => $cnf[$env]['host'],
