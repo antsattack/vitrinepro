@@ -210,7 +210,7 @@ class CategoryController {
         if (!$category) {
             $logger = $this->container->get('logger');
             $logger->warning("Category {$id} Not Found");
-            throw new \Exception("Category not Found", 404);
+            throw new \Exception("Category {$id} not Found", 404);
         }
 
         /**
