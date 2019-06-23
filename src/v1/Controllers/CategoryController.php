@@ -92,6 +92,7 @@ class CategoryController {
          */
         $category = (new Category())->setName($params->name)
         ->setName($params->name);
+        ->setParent(1);
         
         /**
          * Registra a criação da cor

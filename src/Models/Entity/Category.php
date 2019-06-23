@@ -108,6 +108,24 @@ class Category
     }
 
     /**
+     * Set the value of parent
+     *
+     * @param  integer|null  $parent
+     *
+     * @return  self
+     */ 
+    public function setParent($parent)
+    {
+        if (!$parent) {
+            throw new \InvalidArgumentException("Parent of category is required", 400);
+        }
+        
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
      * @return App\Models\Entity\Category
      */
     public function getValues() {
