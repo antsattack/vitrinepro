@@ -88,7 +88,7 @@ class CategoryController {
          */
         $entityManager = $this->container->get('em');
         $categoriesRepository = $entityManager->getRepository('App\Models\Entity\Category');
-        $category_parent = $categoriesRepository->find(1); 
+        $category_parent = $categoriesRepository->find(0); 
         /**
          * Instância da nossa Entidade preenchida com nossos parametros do post
          */
