@@ -110,7 +110,7 @@ class Category
     /**
      * Set the value of parent
      *
-     * @param  integer|null  $parent
+     * @param  \App\Models\Entity\Category|null  $parent
      *
      * @return  self
      */ 

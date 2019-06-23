@@ -87,12 +87,14 @@ class CategoryController {
          * Pega o Entity Manager do nosso Container
          */
         $entityManager = $this->container->get('em');
+        $categoriesRepository = $entityManager->getRepository('App\Models\Entity\Category');
+        $category_parent = $categoriesRepository->find(1); 
         /**
          * Instância da nossa Entidade preenchida com nossos parametros do post
          */
         $category = (new Category())->setName($params->name)
         ->setName($params->name)
-        ->setParent(1);
+        ->setParent($category_parent);
         
         /**
          * Registra a criação da cor
