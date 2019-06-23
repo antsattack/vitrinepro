@@ -83,12 +83,13 @@ class CategoryController {
      */
     public function createCategory($request, $response, $args) {
         $params = (object) $request->getParams();
+        $parent = ($params->name > 0) ? $params->name : 0;
         /**
          * Pega o Entity Manager do nosso Container
          */
         $entityManager = $this->container->get('em');
         $categoriesRepository = $entityManager->getRepository('App\Models\Entity\Category');
-        $category_parent = $categoriesRepository->find(0); 
+        $category_parent = $categoriesRepository->find($parent); 
         /**
          * Instância da nossa Entidade preenchida com nossos parametros do post
          */
