@@ -91,7 +91,7 @@ class CategoryController {
          * Instância da nossa Entidade preenchida com nossos parametros do post
          */
         $category = (new Category())->setName($params->name)
-        ->setName($params->name);
+        ->setName($params->name)
         ->setParent(1);
         
         /**
