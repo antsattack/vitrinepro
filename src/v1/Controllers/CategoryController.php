@@ -151,8 +151,8 @@ class CategoryController {
      */
     public function updateCategory($request, $response, $args) {
 
-        //$id = (int) $args['id'];
-        $id = (int) $request->getParam('id');
+        $id = (int) $args['id'];
+        //$id = (int) $request->getParam('id');
 
         /**
          * Encontra a categoria no Banco
@@ -195,8 +195,8 @@ class CategoryController {
      */
     public function deleteCategory($request, $response, $args) {
 
-        //$id = (int) $args['id'];
-        $id = (int) $request->getParam('id');
+        $id = (int) $args['id'];
+        //$id = (int) $request->getParam('id');
 
         /**
          * Encontra a category no Banco
