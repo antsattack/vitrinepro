@@ -22,7 +22,7 @@ $app->group('/v1', function() {
         $this->get('/{parent_id:[0-9]+}', '\App\v1\Controllers\CategoryController:listCategory');
         $this->post('', '\App\v1\Controllers\CategoryController:createCategory');
         $this->patch('', '\App\v1\Controllers\CategoryController:updateCategory');
-        $this->delete('', '\App\v1\Controllers\CategoryController:deleteCategory');
+        $this->delete('/{id:[0-9]+}', '\App\v1\Controllers\CategoryController:deleteCategory');
     });
 
     $this->group('/colors', function() {
