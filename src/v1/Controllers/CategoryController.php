@@ -106,7 +106,7 @@ class CategoryController {
         /**
          * Persiste a entidade no banco de dados
          */
-        $entityManager->persist($category);
+        $entityManager->merge($category);
         $entityManager->flush();
         $return = $response->withJson($category, 201)
             ->withHeader('Content-type', 'application/json');
