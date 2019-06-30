@@ -108,7 +108,7 @@ class CategoryController {
          */
         $entityManager->merge($category);
         $entityManager->flush();
-        $return = $response->withJson($category, 201)
+        $return = $response->withJson($category->getId(), 201)
             ->withHeader('Content-type', 'application/json');
         return $return;
     }
