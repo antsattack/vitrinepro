@@ -83,7 +83,7 @@ class CategoryController {
      */
     public function createCategory($request, $response, $args) {
         $params = (object) $request->getParams();
-        $parent = ($params->name > 0) ? $params->name : 0;
+        $parent = ((int) $params->id_parent > 0) ? (int) $params->id_parent : 0;
         /**
          * Pega o Entity Manager do nosso Container
          */
