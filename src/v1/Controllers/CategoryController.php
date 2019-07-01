@@ -224,7 +224,7 @@ class CategoryController {
             $return = $response->withJson(['msg' => "Deleting the category {$id}"], 204)
                 ->withHeader('Content-type', 'application/json');
             return $return;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $return = $response->withJson("Categoria não pode ser excluída", 201)
             ->withHeader('Content-type', 'application/json');
             return $return;
