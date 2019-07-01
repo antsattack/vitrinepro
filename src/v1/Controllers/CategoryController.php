@@ -98,7 +98,7 @@ class CategoryController {
         ->setParent($category_parent);
         
         /**
-         * Registra a criação da cor
+         * Registra a criação da categoria
          */
         $logger = $this->container->get('logger');
         $logger->info('Category Created!', $category->getValues());
@@ -217,11 +217,17 @@ class CategoryController {
         /**
          * Remove a entidade
          */
-        $entityManager->remove($category);
-        $entityManager->flush();
+        try {
+            $entityManager->remove($category);
+            $entityManager->flush();
 
-        $return = $response->withJson(['msg' => "Deleting the category {$id}"], 204)
+            $return = $response->withJson(['msg' => "Deleting the category {$id}"], 204)
+                ->withHeader('Content-type', 'application/json');
+            return $return;
+        } catch (Exception $e) {
+            $return = $response->withJson("Categoria não pode ser excluída", 201)
             ->withHeader('Content-type', 'application/json');
-        return $return;
+            return $return;
+        }
     }
 }
