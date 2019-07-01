@@ -151,8 +151,8 @@ class CategoryController {
      */
     public function updateCategory($request, $response, $args) {
 
-        $id = (int) $args['id'];
-        //$id = (int) $request->getParam('id');
+        //$id = (int) $args['id'];
+        $id = (int) $request->getParam('id');
 
         /**
          * Encontra a categoria no Banco
