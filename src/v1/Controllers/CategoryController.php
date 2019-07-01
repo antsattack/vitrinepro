@@ -225,7 +225,7 @@ class CategoryController {
                 ->withHeader('Content-type', 'application/json');
             return $return;
         } catch (\Exception $e) {
-            $return = $response->withJson("Categoria não pode ser excluída", 201)
+            $return = $response->withJson("Categoria não pode ser excluída", 202)
             ->withHeader('Content-type', 'application/json');
             return $return;
         }
