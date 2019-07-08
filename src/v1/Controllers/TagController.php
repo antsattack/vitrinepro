@@ -84,7 +84,7 @@ class TagController {
          * Pega o Entity Manager do nosso Container
          */
         $entityManager = $this->container->get('em');
-        $categoriesRepository = $entityManager->getRepository('App\Models\Entity\Tag');
+        $categoriesRepository = $entityManager->getRepository('App\Models\Entity\Category');
         $category_parent = $categoriesRepository->find($parent); 
         /**
          * Instância da nossa Entidade preenchida com nossos parametros do post
