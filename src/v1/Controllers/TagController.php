@@ -78,7 +78,8 @@ class TagController {
      */
     public function createTag($request, $response, $args) {
         $params = (object) $request->getParams();
-        $parent = ((int) $params->id_parent > 0) ? (int) $params->id_parent : 0;
+        //$parent = ((int) $params->id_parent > 0) ? (int) $params->id_parent : 0;
+        $parent = (int) $args['ctegory_id'];
         /**
          * Pega o Entity Manager do nosso Container
          */
@@ -116,8 +117,8 @@ class TagController {
      */
     public function updateTag($request, $response, $args) {
 
-        //$id = (int) $args['id'];
-        $id = (int) $request->getParam('id');
+        $id = (int) $args['id'];
+        //$id = (int) $request->getParam('id');
 
         /**
          * Encontra a tag no Banco
