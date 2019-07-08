@@ -57,6 +57,9 @@ $app->group('/v1', function() {
 
     $this->group('/tags', function() {
         $this->get('/category/{category_id:[0-9]+}', '\App\v1\Controllers\TagController:listTagByCategory');
+        $this->post('/category/{category_id:[0-9]+}', '\App\v1\Controllers\TagController:createTag');
+        $this->patch('/{id:[0-9]+}', '\App\v1\Controllers\TagController:updateTag');
+        $this->delete('/{id:[0-9]+}', '\App\v1\Controllers\TagController:deleteTag');
     });
 
     $this->group('/transactions', function() {
