@@ -92,14 +92,14 @@ class Brand
     public function setName($name)
     {
         if (!$name && !is_string($name)) {
-            throw new \InvalidArgumentException("Name of tag is required", 400);
+            throw new \InvalidArgumentException("Name is required", 400);
         }
         
         $this->name = $name;
 
         return $this;
     }
-    
+
     /**
      * Set the value of parent
      *

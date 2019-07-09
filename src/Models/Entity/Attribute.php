@@ -74,11 +74,98 @@ class Attribute
     public $product;
 
     /**
-     * Constructor
-     */
-    public function __construct()
+     * Get the value of id
+     *
+     * @return  int
+     */ 
+    public function getId()
     {
-        $this->product = new \Doctrine\Common\Collections\ArrayCollection();
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @param  int  $id
+     *
+     * @return  self
+     */ 
+    public function setId(int $id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of name
+     *
+     * @return  string|null
+     */ 
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set the value of name
+     *
+     * @param  string|null  $name
+     *
+     * @return  self
+     */ 
+    public function setName($name)
+    {
+        if (!$name && !is_string($name)) {
+            throw new \InvalidArgumentException("Name is required", 400);
+        }
+        
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of description
+     *
+     * @param  string|null  $description
+     *
+     * @return  self
+     */ 
+    public function setDescription($description)
+    {
+        if (!$description && !is_string($description)) {
+            throw new \InvalidArgumentException("Description is required", 400);
+        }
+        
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of parent
+     *
+     * @param  \App\Models\Entity\Category|null  $category
+     *
+     * @return  self
+     */ 
+    public function setCategory($category)
+    {
+        if (!$category) {
+            throw new \InvalidArgumentException("Category is required", 400);
+        }
+        
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return App\Models\Entity\Brand
+     */
+    public function getValues() {
+        return get_object_vars($this);
     }
 
 }
