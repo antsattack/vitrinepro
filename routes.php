@@ -20,6 +20,13 @@ $app->group('/v1', function() {
         $this->delete('/{id:[0-9]+}', '\App\v1\Controllers\BrandController:deleteBrand');
     });
 
+    $this->group('/attributes', function() {
+        $this->get('/category/{category_id:[0-9]+}', '\App\v1\Controllers\AttributeController:listAttribute');
+        $this->post('/category/{category_id:[0-9]+}', '\App\v1\Controllers\AttributeController:createAttribute');
+        $this->patch('/{id:[0-9]+}', '\App\v1\Controllers\AttributeController:updateAttribute');
+        $this->delete('/{id:[0-9]+}', '\App\v1\Controllers\AttributeController:deleteAttribute');
+    });
+
     $this->group('/categories', function() {
         $this->get('', '\App\v1\Controllers\CategoryController:listCategory');
         $this->get('/{parent_id:[0-9]+}', '\App\v1\Controllers\CategoryController:listCategory');
