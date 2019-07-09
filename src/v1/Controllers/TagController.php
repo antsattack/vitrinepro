@@ -117,8 +117,8 @@ class TagController {
      */
     public function updateTag($request, $response, $args) {
 
-        $id = (int) $args['id'];
-        //$id = (int) $request->getParam('id');
+        //$id = (int) $args['id'];
+        $id = (int) $request->getParam('id');
 
         /**
          * Encontra a tag no Banco
