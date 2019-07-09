@@ -95,7 +95,7 @@ class BrandController {
          * Registra a criação da categoria
          */
         $logger = $this->container->get('logger');
-        $logger->info('Brand Created!', $tag->getValues());
+        $logger->info('Brand Created!', $brand->getValues());
 
         /**
          * Persiste a entidade no banco de dados
