@@ -15,6 +15,9 @@ $app->group('/v1', function() {
 
     $this->group('/brands', function() {
         $this->get('/category/{category_id:[0-9]+}', '\App\v1\Controllers\BrandController:listBrand');
+        $this->post('/category/{category_id:[0-9]+}', '\App\v1\Controllers\BrandController:createBrand');
+        $this->patch('/{id:[0-9]+}', '\App\v1\Controllers\BrandController:updateBrand');
+        $this->delete('/{id:[0-9]+}', '\App\v1\Controllers\BrandController:deleteBrand');
     });
 
     $this->group('/categories', function() {

@@ -83,6 +83,42 @@ class Brand
     }
 
     /**
+     * Set the value of name
+     *
+     * @param  string|null  $name
+     *
+     * @return  self
+     */ 
+    public function setName($name)
+    {
+        if (!$name && !is_string($name)) {
+            throw new \InvalidArgumentException("Name of tag is required", 400);
+        }
+        
+        $this->name = $name;
+
+        return $this;
+    }
+    
+    /**
+     * Set the value of parent
+     *
+     * @param  \App\Models\Entity\Category|null  $category
+     *
+     * @return  self
+     */ 
+    public function setCategory($category)
+    {
+        if (!$category) {
+            throw new \InvalidArgumentException("Category is required", 400);
+        }
+        
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
      * @return App\Models\Entity\Brand
      */
     public function getValues() {
