@@ -46,7 +46,7 @@ class AttributeController {
                 a.description AS description
             FROM 
                 App\Models\Entity\Attribute a
-                JOIN b.category c
+                JOIN a.category c
             WHERE 
                 c.id = $category_id
             ORDER BY
