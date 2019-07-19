@@ -155,7 +155,7 @@ class ProductController {
         $currency = (new Currency())->setId(1);
         $token = $request->getHeaderLine('X-Token');
         $data = JWT::decode($token, $this->container->get('secretkey'), array('HS512'));
-        if (!$data->userid){
+        if (!$data->id){
             return $response->withStatus(401);
         }
         $seller = (new User())->setId($data->userid);
