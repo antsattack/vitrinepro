@@ -158,7 +158,7 @@ class ProductController {
         if (!$data->id){
             return $response->withStatus(401);
         }
-        $seller = (new User())->setId($data->userid);
+        $seller = (new User())->setId($data->id);
         /**
          * Pega o Entity Manager do nosso Container
          */
