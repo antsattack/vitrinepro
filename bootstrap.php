@@ -8,8 +8,8 @@ use Psr7Middlewares\Middleware\TrailingSlash;
 use Monolog\Logger;
 use Firebase\JWT\JWT;
 
-define(BDPSWD, getenv("BDPSWD"));
-define(ENVIR, getenv("ENVIR"));
+define('BDPSWD', getenv("BDPSWD"));
+define('ENVIR', getenv("ENVIR"));
 
 /**
  * Configurações
