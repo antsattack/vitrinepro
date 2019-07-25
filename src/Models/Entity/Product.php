@@ -387,13 +387,13 @@ class Product
      *
      * @return  self
      */ 
-    public function setTag($tag)
+    /*public function setTag($tag)
     {
-        $tagCollection = new ArrayCollection($tag);
-        $this->tag = $tagCollection;
+        //$tagCollection = new ArrayCollection($tag);
+        $this->tag->add($tag);
 
         return $this;
-    }
+    }*/
 
     /**
      * Get the value of attribute

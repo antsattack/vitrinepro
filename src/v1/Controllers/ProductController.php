@@ -288,11 +288,15 @@ class ProductController {
             }
 
             if (count($params->tag)) {
-                $listTags = array();
-                foreach($params->tag AS $tag){
-                    $listTags[] = $entityManager->find('App\Models\Entity\Tag', $tag);
+                //$listTags = array();
+                $product->getTag()->clear();
+                foreach($params->tag AS $tag_id){
+                    //$listTags[] = $entityManager->find('App\Models\Entity\Tag', $tag);
+                    $tag = $entityManager->find('App\Models\Entity\Tag', $tag_id);
+                    //if(!$product->getTag()->contains($tag)){
+                        $product->getTag()->add($tag);
+                    //}
                 }
-                $product->setTag($listTags);
             }
 
             if (count($params->datasheet)) {
