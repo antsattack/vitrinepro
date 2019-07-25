@@ -54,9 +54,11 @@ class ProductController {
             SELECT 
                 p.id AS product_id,
                 p.title AS title,
+                i.id AS image,
                 p.description AS description
             FROM 
                 App\Models\Entity\Product p
+                LEFT JOIN App\Models\Entity\Image i WITH i.product = p.id AND i.main = 1
             ORDER BY
                 p.id
         ");
@@ -68,6 +70,50 @@ class ProductController {
         foreach($products_temp AS $item){
             $products[$i]['id'] = (int) $item['product_id'];
             $products[$i]['title'] = $item['title'];
+            $products[$i]['image'] = $item['image'];
+            $products[$i]['description'] = $item['description'];
+            $i++;
+        }
+
+        $return = $response->withJson($products, 200)
+            ->withHeader('Content-type', 'application/json');
+        return $return;
+    }
+
+    /**
+     * Listagem por usuário
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return Response
+     */
+    public function listProductByUser($request, $response, $args) {
+
+        $entityManager = $this->container->get('em');
+        $user_id = (int) $args['user_id'];
+        $query = $entityManager->createQuery("
+            SELECT 
+                p.id AS product_id,
+                p.title AS title,
+                i.id AS image,
+                p.description AS description
+            FROM 
+                App\Models\Entity\Product p
+                LEFT JOIN App\Models\Entity\Image i WITH i.product = p.id AND i.main = 1
+            WHERE
+                p.seller = $user_id
+            ORDER BY
+                p.id
+        ");
+        $products_temp = $query->getResult();
+
+        $products = [];
+
+        $i = 0;
+        foreach($products_temp AS $item){
+            $products[$i]['id'] = (int) $item['product_id'];
+            $products[$i]['title'] = $item['title'];
+            $products[$i]['image'] = $item['image'];
             $products[$i]['description'] = $item['description'];
             $i++;
         }
