@@ -71,7 +71,7 @@ class ImageController {
             $key_image = "image_".$item['image_id'];
             $images[$i]['id'] = (int) $item['image_id'];
             $images[$i]['main'] = (int) $item['main'];
-            $images[$i]['url'] = "http://img.shoppingnasuacasa.com.br/".$item['prefix']."/".$item['product_id']."_".$item['image_id'].".jpg";
+            $images[$i]['url'] = "http://img.rankforms.com/".$item['prefix']."/".$item['product_id']."_".$item['image_id'].".jpg";
             $i++;
         }
 
@@ -222,14 +222,14 @@ class ImageController {
              * método putObject envia os dados pro bucket selecionado
              */
             $resp = $clientS3->putObject(array(
-                'Bucket' => "img.shoppingnasuacasa.com.br",
+                'Bucket' => "img.rankforms.com",
                 'Key' => $name,
                 'SourceFile' => $reduced
             ));
 
             unlink($reduced);
             //}
-            $ret = "http://img.shoppingnasuacasa.com.br/".$name;
+            $ret = "http://img.rankforms.com/".$name;
 
             $entityManager->getConnection()->commit();
 
@@ -328,7 +328,7 @@ class ImageController {
         $name = $image->prefix."/".$image->product->id."_".$image->id.".jpg";
 
         $resp = $clientS3->deleteObject(array(
-            'Bucket' => "img.shoppingnasuacasa.com.br",
+            'Bucket' => "img.rankforms.com",
             'Key'    => $name,
             'RequestPayer' => 'requester',
         ));
@@ -380,7 +380,7 @@ class ImageController {
             $key_image = "image_".$item['image_id'];
             $images[$i]['id'] = (int) $item['image_id'];
             $images[$i]['main'] = (int) $item['main'];
-            $images[$i]['url'] = "http://img.shoppingnasuacasa.com.br/".$item['prefix']."/".$item['product_id']."_".$item['image_id'].".jpg";
+            $images[$i]['url'] = "http://img.rankforms.com/".$item['prefix']."/".$item['product_id']."_".$item['image_id'].".jpg";
             $i++;
         }
 

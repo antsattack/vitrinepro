@@ -20,7 +20,7 @@ $configs = [
     ],
     'appsettings' => [
         'prefix' => 'ssc',
-        'url' => 'http://images.rankforms.com'
+        'url' => 'http://img.rankforms.com'
     ]
 ];
 
