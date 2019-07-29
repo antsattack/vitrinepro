@@ -97,13 +97,33 @@ class ImageController {
         $entityManager = $this->container->get('em');
         $entityManager->getConnection()->beginTransaction();
         try{
+            $product_id = ($params->product) ? $params->product : 0;
+            $query = $entityManager->createQuery("
+            SELECT 
+                i.id AS image_id,
+                i.prefix AS prefix,
+                p.id AS product_id
+            FROM 
+                App\Models\Entity\Image i
+                JOIN i.product p
+            WHERE 
+                p.id = $product_id
+            ORDER BY
+                i.id
+            ");
+            $images_temp = $query->getResult();
+            if (count($images_temp)){
+                $is_main = 0;
+            } else{
+                $is_main = 1;
+            }
             /**
              * Instância da nossa Entidade preenchida com nossos parametros do post
              */
             $product = (new Product())->setId($params->product);
             $image = (new Image())->setPrefix("ssc")
                 ->setProduct($product)
-                ->setMain($params->main);
+                ->setMain($is_main);
 
             $files = $request->getUploadedFiles();
 

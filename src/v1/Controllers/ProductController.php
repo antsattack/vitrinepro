@@ -96,9 +96,18 @@ class ProductController {
                 p.id AS product_id,
                 p.title AS title,
                 i.id AS image,
-                p.description AS description
+                c.id AS category,
+                pa.id AS parent_category,
+                b.id AS brand,
+                p.description AS description,
+                p.model AS model,
+                p.price AS price,
+                p.new AS new
             FROM 
                 App\Models\Entity\Product p
+                LEFT JOIN App\Models\Entity\Category c WITH p.category = c.id
+                LEFT JOIN App\Models\Entity\Category pa WITH c.parent = pa.id
+                LEFT JOIN App\Models\Entity\Brand b WITH p.brand = b.id
                 LEFT JOIN App\Models\Entity\Image i WITH i.product = p.id AND i.main = 1
             WHERE
                 p.seller = $user_id
@@ -107,14 +116,39 @@ class ProductController {
         ");
         $products_temp = $query->getResult();
 
+        
+
         $products = [];
 
         $i = 0;
         foreach($products_temp AS $item){
-            $products[$i]['id'] = (int) $item['product_id'];
+            $product_id = (int) $item['product_id'];
+            $products[$i]['id'] = $product_id;
             $products[$i]['title'] = $item['title'];
+            $products[$i]['category'] = $item['category'];
+            $products[$i]['parent_category'] = $item['parent_category'];
             $products[$i]['image'] = $item['image'];
             $products[$i]['description'] = $item['description'];
+            $products[$i]['brand'] = $item['brand'];
+            $products[$i]['model'] = $item['model'];
+            $products[$i]['price'] = $item['price'];
+            $products[$i]['new'] = $item['new'];
+            $query = $entityManager->createQuery("
+            SELECT 
+                t.id
+            FROM 
+                App\Models\Entity\Tag t
+                JOIN t.product p
+            WHERE
+                p.id = $product_id
+            ORDER BY
+                t.id
+            ");
+            $tags = $query->getResult();
+            $tagsList = array();
+            foreach($tags AS $tag) $tagsList[] = $tag["id"];
+
+            $products[$i]['tag'] = $tagsList;
             $i++;
         }
 

@@ -52,6 +52,7 @@ class ImageController {
             SELECT 
                 i.id AS image_id,
                 i.prefix AS prefix,
+                i.main AS main,
                 p.id AS product_id
             FROM 
                 App\Models\Entity\Image i
@@ -69,6 +70,7 @@ class ImageController {
         foreach($images_temp AS $item){
             $key_image = "image_".$item['image_id'];
             $images[$i]['id'] = (int) $item['image_id'];
+            $images[$i]['main'] = (int) $item['main'];
             $images[$i]['url'] = "http://img.shoppingnasuacasa.com.br/".$item['prefix']."/".$item['product_id']."_".$item['image_id'].".jpg";
             $i++;
         }
@@ -97,13 +99,34 @@ class ImageController {
         $entityManager = $this->container->get('em');
         $entityManager->getConnection()->beginTransaction();
         try{
+            $product_id = ($params->product) ? $params->product : 0;
+            $query = $entityManager->createQuery("
+            SELECT 
+                i.id AS image_id,
+                i.prefix AS prefix,
+                i.main AS main,
+                p.id AS product_id
+            FROM 
+                App\Models\Entity\Image i
+                JOIN i.product p
+            WHERE 
+                p.id = $product_id
+            ORDER BY
+                i.id
+            ");
+            $images_temp = $query->getResult();
+            if (count($images_temp)){
+                $is_main = 0;
+            } else{
+                $is_main = 1;
+            }
             /**
              * Instância da nossa Entidade preenchida com nossos parametros do post
              */
             $product = (new Product())->setId($params->product);
             $image = (new Image())->setPrefix("ssc")
                 ->setProduct($product)
-                ->setMain($params->main);
+                ->setMain($is_main);
 
             /*$files = $request->getUploadedFiles();
 
@@ -317,6 +340,51 @@ class ImageController {
         $entityManager->flush();
 
         $return = $response->withJson(['msg' => "Deleting the image {$id}"], 204)
+            ->withHeader('Content-type', 'application/json');
+        return $return;
+    }
+
+    /**
+     * Ver Imagen
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return Response
+     */
+    public function viewImage($request, $response, $args) {
+
+        $id = (int) $args['id'];
+        $id = ($id) ? $id : 0;
+
+        $entityManager = $this->container->get('em');
+        $query = $entityManager->createQuery("
+            SELECT 
+                i.id AS image_id,
+                i.prefix AS prefix,
+                i.main AS main,
+                p.id AS product_id
+            FROM 
+                App\Models\Entity\Image i
+                JOIN i.product p
+            WHERE 
+                i.id = $id
+            ORDER BY
+                i.id
+        ");
+        $images_temp = $query->getResult();
+
+        $images = [];
+
+        $i = 0;
+        foreach($images_temp AS $item){
+            $key_image = "image_".$item['image_id'];
+            $images[$i]['id'] = (int) $item['image_id'];
+            $images[$i]['main'] = (int) $item['main'];
+            $images[$i]['url'] = "http://img.shoppingnasuacasa.com.br/".$item['prefix']."/".$item['product_id']."_".$item['image_id'].".jpg";
+            $i++;
+        }
+
+        $return = $response->withJson($images, 200)
             ->withHeader('Content-type', 'application/json');
         return $return;
     }

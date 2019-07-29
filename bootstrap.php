@@ -105,7 +105,7 @@ $conn = array(
 $cnf['local']['user'] = 'root';
 $cnf['local']['pwd'] = 'root';
 $cnf['local']['host'] = '127.0.0.1';
-$cnf['local']['port'] = '8889';
+$cnf['local']['port'] = '3306';
 
 $cnf['aws']['user'] = 'catalog';
 $cnf['aws']['pwd'] = BDPSWD;
@@ -113,7 +113,7 @@ $cnf['aws']['host'] = 'catalog.ctrbgjpzm11w.sa-east-1.rds.amazonaws.com';
 $cnf['aws']['port'] = '3306';
 
 $env = ENVIR;
-$env = "aws";
+$env = "local";
 
 $conn = array(
     'dbname' => 'catalog',

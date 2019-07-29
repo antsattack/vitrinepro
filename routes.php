@@ -95,6 +95,10 @@ $app->group('/v1', function() {
 $app->group('/v2', function() {
     $this->group('/images', function() {
         $this->post('', '\App\v2\Controllers\ImageController:createImage');
+        $this->get('/product/{product_id:[0-9]+}', '\App\v2\Controllers\ImageController:listImage');
+        $this->get('/{id:[0-9]+}', '\App\v2\Controllers\ImageController:viewImage');
+        $this->patch('/main/product/{product_id:[0-9]+}', '\App\v2\Controllers\ImageController:setMainImage');
+        $this->delete('/{id:[0-9]+}', '\App\v2\Controllers\ImageController:deleteImage');
     });
 });
 
