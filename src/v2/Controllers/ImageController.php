@@ -230,7 +230,7 @@ class ImageController {
             unlink($reduced);
             //}
             $url_final = "http://img.rankforms.com/".$name;
-            $ret = (object) [
+            $ret = [
                 'id' => $novoId,
                 'url' => $url_final
             ];
