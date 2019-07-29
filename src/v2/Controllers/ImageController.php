@@ -229,7 +229,11 @@ class ImageController {
 
             unlink($reduced);
             //}
-            $ret = "http://img.rankforms.com/".$name;
+            $url_final = "http://img.rankforms.com/".$name;
+            $ret = (object) [
+                'id' => $novoId,
+                'url' => $url_final
+            ];
 
             $entityManager->getConnection()->commit();
 
