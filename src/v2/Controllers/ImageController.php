@@ -231,8 +231,8 @@ class ImageController {
             //}
             $url_final = "http://img.rankforms.com/".$name;
             $ret = [
-                'id' => $novoId,
-                'url' => $url_final
+                "id" => $novoId,
+                "url" => $url_final
             ];
 
             $entityManager->getConnection()->commit();
