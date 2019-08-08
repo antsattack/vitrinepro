@@ -113,7 +113,7 @@ $cnf['aws']['host'] = 'catalog.ctrbgjpzm11w.sa-east-1.rds.amazonaws.com';
 $cnf['aws']['port'] = '3306';
 
 $env = ENVIR;
-$env = "local";
+$env = "aws";
 
 $conn = array(
     'dbname' => 'catalog',
