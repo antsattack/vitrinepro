@@ -62,6 +62,7 @@ $app->group('/v1', function() {
         $this->get('', '\App\v1\Controllers\ProductController:listProduct');
         $this->get('/{id:[0-9]+}', '\App\v1\Controllers\ProductController:viewProduct');
         $this->get('/user/{user_id:[0-9]+}', '\App\v1\Controllers\ProductController:listProductByUser');
+        $this->get('/category/{category_id:[0-9]+}', '\App\v1\Controllers\ProductController:listProductByMainCategory');
         $this->post('', '\App\v1\Controllers\ProductController:createProduct');
         $this->patch('/{id:[0-9]+}', '\App\v1\Controllers\ProductController:updateProduct');
     });
@@ -84,7 +85,7 @@ $app->group('/v1', function() {
     $this->group('/users', function() {
         $this->get('', '\App\v1\Controllers\UserController:listUser');
         $this->get('/{id:[0-9]+}', '\App\v1\Controllers\UserController:viewUser');
-        $this->put('/{id:[0-9]+}', '\App\v1\Controllers\UserController:updateUser');
+        $this->patch('/{id:[0-9]+}', '\App\v1\Controllers\UserController:updateUser');
         $this->delete('/{id:[0-9]+}', '\App\v1\Controllers\UserController:deleteUser');
     });
 });

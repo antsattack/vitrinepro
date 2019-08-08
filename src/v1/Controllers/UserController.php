@@ -188,9 +188,12 @@ class UserController {
             $logger = $this->container->get('logger');
             $logger->warning("User {$id} Not Found");
             throw new \Exception("User not Found", 404);
-        }    
+        }
 
-        $return = $response->withJson($user, 200)
+        $ret = $user;
+        $ret->passwd = null;
+
+        $return = $response->withJson($ret, 200)
             ->withHeader('Content-type', 'application/json');
         return $return;   
     }
@@ -226,15 +229,18 @@ class UserController {
          * Atualiza e Persiste  item com os parâmetros recebidos no request
          */
         $user->setName($request->getParam('name'))
-            ->setHexadecimal($request->getParam('hexadecimal'));
+            ->setEmail($request->getParam('email'));
 
         /**
          * Persiste a entidade no banco de dados
          */
         $entityManager->persist($user);
-        $entityManager->flush();        
+        $entityManager->flush();      
         
-        $return = $response->withJson($user, 200)
+        $ret = $user;
+        $ret->passwd = null;
+        
+        $return = $response->withJson($ret, 200)
             ->withHeader('Content-type', 'application/json');
         return $return;
     }

@@ -158,6 +158,88 @@ class ProductController {
     }
 
     /**
+     * Listagem por categoria principal
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return Response
+     */
+    public function listProductByMainCategory($request, $response, $args) {
+
+        $entityManager = $this->container->get('em');
+        $category_id = (int) $args['category_id'];
+        $query = $entityManager->createQuery("
+            SELECT 
+                p.id AS product_id,
+                p.title AS title,
+                i.id AS image,
+                c.id AS category,
+                pa.id AS parent_category,
+                b.id AS brand,
+                p.description AS description,
+                p.model AS model,
+                p.price AS price,
+                p.new AS new,
+                s.id AS seller
+            FROM 
+                App\Models\Entity\Product p
+                LEFT JOIN App\Models\Entity\Category c WITH p.category = c.id
+                LEFT JOIN App\Models\Entity\Category pa WITH c.parent = pa.id
+                LEFT JOIN App\Models\Entity\Category ma WITH pa.parent = ma.id
+                LEFT JOIN App\Models\Entity\Brand b WITH p.brand = b.id
+                LEFT JOIN App\Models\Entity\User s WITH p.seller = s.id
+                LEFT JOIN App\Models\Entity\Image i WITH i.product = p.id AND i.main = 1
+            WHERE
+                ma.id = $category_id
+            ORDER BY
+                p.id
+        ");
+        $products_temp = $query->getResult();
+
+        
+
+        $products = [];
+
+        $i = 0;
+        foreach($products_temp AS $item){
+            $product_id = (int) $item['product_id'];
+            $products[$i]['id'] = $product_id;
+            $products[$i]['title'] = $item['title'];
+            $products[$i]['category'] = $item['category'];
+            $products[$i]['parent_category'] = $item['parent_category'];
+            $products[$i]['image'] = $item['image'];
+            $products[$i]['description'] = $item['description'];
+            $products[$i]['brand'] = $item['brand'];
+            $products[$i]['model'] = $item['model'];
+            $products[$i]['price'] = $item['price'];
+            $products[$i]['new'] = $item['new'];
+            $products[$i]['seller'] = $item['seller'];
+            $query = $entityManager->createQuery("
+            SELECT 
+                t.id
+            FROM 
+                App\Models\Entity\Tag t
+                JOIN t.product p
+            WHERE
+                p.id = $product_id
+            ORDER BY
+                t.id
+            ");
+            $tags = $query->getResult();
+            $tagsList = array();
+            foreach($tags AS $tag) $tagsList[] = $tag["id"];
+
+            $products[$i]['tag'] = $tagsList;
+            $i++;
+        }
+
+        $return = $response->withJson($products, 200)
+            ->withHeader('Content-type', 'application/json');
+        return $return;
+    }
+
+
+    /**
      * Ver
      * @param [type] $request
      * @param [type] $response
@@ -175,7 +257,7 @@ class ProductController {
         $prdObj->title = $product->title;
         $prdObj->description = $product->description;
         $prdObj->model = $product->model;
-        $prdObj->price = (float) $product->price;
+        $prdObj->price = str_replace(".", ",", (float) $product->price);
         $prdObj->new = $product->new;
         $prdObj->quantity = $product->quantity;
         $prdObj->brand = $product->brand->id;
@@ -200,6 +282,23 @@ class ProductController {
 
         $query = $entityManager->createQuery("
             SELECT 
+                i.id AS img_id
+            FROM 
+                App\Models\Entity\Image i
+                JOIN i.product p
+            WHERE
+                p.id = $product_id
+            ORDER BY
+                i.main DESC
+        ");
+        $imgs = $query->getResult();
+        $imgsList = array();
+        foreach($imgs AS $item) {
+            $imgsList[] = "http://img.rankforms.com/ssc/".$product_id."_".$item["img_id"].".jpg";
+        }
+
+        $query = $entityManager->createQuery("
+            SELECT 
                 d.attribute AS id,
                 d.value
             FROM 
@@ -217,6 +316,7 @@ class ProductController {
         }
         $prdObj->datasheet = $datasheetList;
         $prdObj->tags = $tagsList;
+        $prdObj->images = $imgsList;
 
         $return = $response->withJson($prdObj, 200)
             ->withHeader('Content-type', 'application/json');
