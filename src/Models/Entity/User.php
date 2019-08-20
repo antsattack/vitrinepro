@@ -1,7 +1,5 @@
 <?php
 
-
-
 namespace App\Models\Entity;
 
 /**
@@ -62,13 +60,18 @@ class User
      */
     public $addressShipping;
 
-
+    /**
+     * @var string|null
+     *
+     * @Column(name="indication", type="string", length=255, nullable=true)
+     */
+    public $indication;
 
     /**
      * Get the value of id
      *
      * @return  int
-     */ 
+     */
     public function getId()
     {
         return $this->id;
@@ -80,7 +83,7 @@ class User
      * @param  int  $id
      *
      * @return  self
-     */ 
+     */
     public function setId(int $id)
     {
         $this->id = $id;
@@ -92,7 +95,7 @@ class User
      * Get the value of email
      *
      * @return  string|null
-     */ 
+     */
     public function getEmail()
     {
         return $this->email;
@@ -104,7 +107,7 @@ class User
      * @param  string|null  $email
      *
      * @return  self
-     */ 
+     */
     public function setEmail($email)
     {
         $this->email = $email;
@@ -116,7 +119,7 @@ class User
      * Get the value of name
      *
      * @return  string|null
-     */ 
+     */
     public function getName()
     {
         return $this->name;
@@ -128,7 +131,7 @@ class User
      * @param  string|null  $name
      *
      * @return  self
-     */ 
+     */
     public function setName($name)
     {
         $this->name = $name;
@@ -142,7 +145,7 @@ class User
      * @param  string|null  $passwd
      *
      * @return  self
-     */ 
+     */
     public function setPasswd($passwd)
     {
         $this->passwd = $passwd;
@@ -151,9 +154,24 @@ class User
     }
 
     /**
+     * Set the value of indication
+     *
+     * @param  string|null  $indication
+     *
+     * @return  self
+     */
+    public function setIndication($indication)
+    {
+        $this->indication = $indication;
+
+        return $this;
+    }
+
+    /**
      * @return App\Models\Entity\User
      */
-    public function getValues() {
+    public function getValues()
+    {
         return get_object_vars($this);
     }
 }

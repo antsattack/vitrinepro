@@ -2,11 +2,11 @@
 //header("Access-Control-Allow-Origin: *");
 require './vendor/autoload.php';
 
-use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
-use Psr7Middlewares\Middleware\TrailingSlash;
-use Monolog\Logger;
+use Doctrine\ORM\Tools\Setup;
 use Firebase\JWT\JWT;
+use Monolog\Logger;
+use Psr7Middlewares\Middleware\TrailingSlash;
 
 define('BDPSWD', getenv("BDPSWD"));
 define('ENVIR', getenv("ENVIR"));
@@ -20,8 +20,8 @@ $configs = [
     ],
     'appsettings' => [
         'prefix' => 'ssc',
-        'url' => 'http://img.rankforms.com'
-    ]
+        'url' => 'http://img.rankforms.com',
+    ],
 ];
 
 /**
@@ -31,7 +31,6 @@ $configs = [
  * da nossa API
  */
 $container = new \Slim\Container($configs);
-
 
 /**
  * Converte os Exceptions Genéricas dentro da Aplicação em respostas JSON
@@ -74,14 +73,14 @@ $container['notFoundHandler'] = function ($container) {
 /**
  * Serviço de Logging em Arquivo
  */
-$container['logger'] = function($container) {
+$container['logger'] = function ($container) {
     $logger = new Monolog\Logger('books-microservice');
     $logfile = __DIR__ . '/log/books-microservice.log';
     $stream = new Monolog\Handler\StreamHandler($logfile, Monolog\Logger::DEBUG);
     $fingersCrossed = new Monolog\Handler\FingersCrossedHandler(
         $stream, Monolog\Logger::INFO);
     $logger->pushHandler($fingersCrossed);
-    
+
     return $logger;
 };
 
@@ -90,17 +89,17 @@ $isDevMode = true;
 /**
  * Diretório de Entidades e Metadata do Doctrine
  */
-$config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/src/Models/Entity"), $isDevMode);
+$config = Setup::createAnnotationMetadataConfiguration(array(__DIR__ . "/src/Models/Entity"), $isDevMode);
 
 /**
  * Array de configurações da nossa conexão com o banco
  */
 /*
 $conn = array(
-    'driver' => 'pdo_sqlite',
-    'path' => __DIR__ . '/db.sqlite',
+'driver' => 'pdo_sqlite',
+'path' => __DIR__ . '/db.sqlite',
 );
-*/
+ */
 
 $cnf['local']['user'] = 'root';
 $cnf['local']['pwd'] = 'root';
@@ -122,18 +121,16 @@ $conn = array(
     'host' => $cnf[$env]['host'],
     'port' => $cnf[$env]['port'],
     'driver' => 'pdo_mysql',
-    'charset'  => 'utf8',
+    'charset' => 'utf8',
     'driverOptions' => array(
-        1002 => 'SET NAMES utf8'
-    )
+        1002 => 'SET NAMES utf8',
+    ),
 );
-
 
 /**
  * Instância do Entity Manager
  */
 $entityManager = EntityManager::create($conn, $config);
-
 
 /**
  * Coloca o Entity manager dentro do container com o nome de em (Entity Manager)
@@ -154,7 +151,6 @@ $app->options('/{routes:.+}', function ($request, $response, $args) {
     return $response;
 });
 
-
 $app->add(function ($req, $res, $next) {
     $response = $next($req, $res);
     return $response
@@ -165,16 +161,16 @@ $app->add(function ($req, $res, $next) {
 
 /*
 $app->add(new Tuupola\Middleware\CorsMiddleware([
-    "origin" => ["*"],
-    "methods" => ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    "headers.allow" => ['X-Requested-With', 'Content-Type', 'Accept', 'Origin', 'Authorization', 'X-Token'],
-    "headers.expose" => [],
-    "credentials" => true,
-    "cache" => 0,
+"origin" => ["*"],
+"methods" => ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+"headers.allow" => ['X-Requested-With', 'Content-Type', 'Accept', 'Origin', 'Authorization', 'X-Token'],
+"headers.expose" => [],
+"credentials" => true,
+"cache" => 0,
 ]));
-*/
+ */
 /**
- * @Middleware Tratamento da / do Request 
+ * @Middleware Tratamento da / do Request
  * true - Adiciona a / no final da URL
  * false - Remove a / no final da URL
  */
@@ -184,23 +180,22 @@ $app->add(new TrailingSlash(false));
  * Auth básica HTTP
  */
 //$app->add(new \Slim\Middleware\HttpBasicAuthentication([
-    /**
-     * Usuários existentes
-     */
-   // "users" => [
-    //    "root" => "toor"
-    //],
-    /**
-     * Blacklist - Deixa todas liberadas e só protege as dentro do array
-     */
-    //"path" => ["/auth"],
+/**
+ * Usuários existentes
+ */
+// "users" => [
+//    "root" => "toor"
+//],
+/**
+ * Blacklist - Deixa todas liberadas e só protege as dentro do array
+ */
+//"path" => ["/auth"],
 
-    /**
-     * Whitelist - Protege todas as rotas e só libera as de dentro do array
-     */
-    //"passthrough" => ["/auth/liberada", "/admin/ping"],
+/**
+ * Whitelist - Protege todas as rotas e só libera as de dentro do array
+ */
+//"passthrough" => ["/auth/liberada", "/admin/ping"],
 //]));
-
 
 /**
  * Auth básica do JWT
@@ -211,10 +206,10 @@ $app->add(new \Slim\Middleware\JwtAuthentication([
     "regexp" => "/(.*)/",
     "header" => "X-Token",
     "path" => "/",
-    "relaxed" => ["localhost","localhost:8100","ec2-54-94-243-17.sa-east-1.compute.amazonaws.com"],
+    "relaxed" => ["localhost", "localhost:8100", "ec2-54-94-243-17.sa-east-1.compute.amazonaws.com"],
     "passthrough" => ["/auth", "/v1/auth", "/v1/usercreate", "/v1/categories", "/v1/products"],
     "realm" => "Protected",
-    "secret" => $container['secretkey']
+    "secret" => $container['secretkey'],
 ]));
 
 /**
@@ -222,4 +217,3 @@ $app->add(new \Slim\Middleware\JwtAuthentication([
  */
 $trustedProxies = ['0.0.0.0', '127.0.0.1', 'localhost', 'localhost:8100'];
 $app->add(new RKA\Middleware\SchemeAndHost($trustedProxies));
-
