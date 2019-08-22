@@ -270,6 +270,7 @@ class ImageController
          */
         try {
             $user_id = ($params->user) ? $params->user : 0;
+            $file = $params->picture;
 
             $name = $prefix . "/" . $user_id . ".jpg";
 
