@@ -91,6 +91,7 @@ $app->group('/v1', function () {
 
     $this->group('/users', function () {
         $this->get('', '\App\v1\Controllers\UserController:listUser');
+        $this->get('/sellers', '\App\v1\Controllers\UserController:listSellers');
         $this->get('/{id:[0-9]+}', '\App\v1\Controllers\UserController:viewUser');
         $this->patch('/{id:[0-9]+}', '\App\v1\Controllers\UserController:updateUser');
         $this->delete('/{id:[0-9]+}', '\App\v1\Controllers\UserController:deleteUser');

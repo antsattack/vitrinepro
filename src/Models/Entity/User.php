@@ -68,6 +68,13 @@ class User
     public $indication;
 
     /**
+     * @var \DateTime|null
+     *
+     * @Column(name="exclusion", type="datetime", nullable=true)
+     */
+    public $exclusion;
+
+    /**
      * Get the value of id
      *
      * @return  int
