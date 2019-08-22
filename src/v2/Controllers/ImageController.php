@@ -324,7 +324,7 @@ class ImageController
             $resp = $clientS3->putObject(array(
                 'Bucket' => "img.rankforms.com",
                 'Key' => $name,
-                'SourceFile' => $reduced
+                'Body' => $reduced
             ));
 
             unlink($reduced);
