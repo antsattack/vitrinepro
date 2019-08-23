@@ -68,6 +68,21 @@ class User
     public $indication;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ManyToMany(targetEntity="App\Models\Entity\Product", inversedBy="user")
+     * @JoinTable(name="favorite",
+     *   joinColumns={
+     *     @JoinColumn(name="user_id", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @JoinColumn(name="product_id", referencedColumnName="id")
+     *   }
+     * )
+     */
+    public $favorite;
+
+    /**
      * @var \DateTime|null
      *
      * @Column(name="exclusion", type="datetime", nullable=true)

@@ -149,6 +149,13 @@ class Product
     public $tag;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ManyToMany(targetEntity="App\Models\Entity\User", mappedBy="product")
+     */
+    public $user;
+
+    /**
      * Constructor
      */
     public function __construct()
