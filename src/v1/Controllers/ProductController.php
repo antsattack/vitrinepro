@@ -238,7 +238,6 @@ class ProductController {
         return $return;
     }
 
-
     /**
      * Ver
      * @param [type] $request
@@ -249,6 +248,10 @@ class ProductController {
     public function viewProduct($request, $response, $args) {
         $product_id = (int) $args['id'];
         $product_id = ($product_id) ? $product_id : 0;
+
+        $user_id = (int) $args['user_id'];
+        $user_id = ($user_id) ? $user_id : 0;
+
         $entityManager = $this->container->get('em');
         $product = $entityManager->find('App\Models\Entity\Product', $product_id);
 
@@ -279,6 +282,23 @@ class ProductController {
         $tags = $query->getResult();
         $tagsList = array();
         foreach($tags AS $tag) $tagsList[] = $tag["id"];
+
+
+        $query = $entityManager->createQuery("
+            SELECT 
+                u.id
+            FROM 
+                App\Models\Entity\User u
+                JOIN u.product p
+            WHERE
+                p.id = $product_id
+            ORDER BY
+                u.id
+        ");
+        $users = $query->getResult();
+        $usersList = array();
+        foreach($users AS $user) $usersList[] = $user["id"];
+
 
         $query = $entityManager->createQuery("
             SELECT 
@@ -316,6 +336,8 @@ class ProductController {
         }
         $prdObj->datasheet = $datasheetList;
         $prdObj->tags = $tagsList;
+        $prdObj->favorited = in_array($user_id,$usersList);
+        $prdObj->favoritedTimes = count($usersList);
         $prdObj->images = $imgsList;
 
         $return = $response->withJson($prdObj, 200)
@@ -459,6 +481,73 @@ class ProductController {
             $entityManager->flush();
 
             $return_val = $product->getId();
+
+            $entityManager->getConnection()->commit();
+
+            $return = $response->withJson($return_val, 201)
+                ->withHeader('Content-type', 'application/json');
+
+        } catch(\Exception $e){
+            $entityManager->getConnection()->rollBack();
+            $return = $response->withJson($e->getMessage(), 500)
+                ->withHeader('Content-type', 'application/json');
+        }
+        return $return;
+    } 
+
+    /**
+     * Favoritar produto
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return Response
+     */
+    public function favoriteProduct($request, $response, $args) {
+        $product_id = (int) $args['id'];
+        $product_id = ($product_id) ? $product_id : 0;
+
+        $user_id = (int) $args['user_id'];
+        $user_id = ($user_id) ? $user_id : 0;
+
+        $entityManager = $this->container->get('em');
+        $entityManager->getConnection()->beginTransaction();
+        try {
+            $product = $entityManager->find('App\Models\Entity\Product', $product_id);
+
+            $user = $entityManager->find('App\Models\Entity\User', $user_id);
+            if ($product->getUser()->contains($user)){
+                $product->getUser()->removeElement($user);
+                $favoritedTimes = count($product->getUser());
+                $favorited = false;
+            } else{
+                $product->getUser()->add($user);
+                $favoritedTimes = count($product->getUser());
+                $favorited = true;
+            }
+
+            /**
+             * Persiste a entidade no banco de dados
+             */
+            $entityManager->persist($product);
+            $entityManager->flush();
+
+            foreach($params->datasheet AS $datasheet){
+                $entityDatasheet = $entityManager->find('App\Models\Entity\Datasheet', array(
+                    "product" => $product_id,
+                    "attribute" => $datasheet["id"]
+                ));
+                $entityDatasheet->setValue($datasheet["value"]);
+                $entityManager->persist($entityDatasheet);
+            }
+
+            $entityManager->flush();
+
+            $return_val = array(
+                "product_id" => $product->getId(),
+                "user_id" => $user_id,
+                "favoritedTimes" => $favoritedTimes,
+                "favorited" => $favorited
+            );
 
             $entityManager->getConnection()->commit();
 

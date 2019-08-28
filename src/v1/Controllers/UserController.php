@@ -45,6 +45,44 @@ class UserController
     }
 
     /**
+     * Listagem favoritos
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return Response
+     */
+    public function listFavorites($request, $response, $args)
+    {
+        $id = (int) $args['id'];
+        $id = ($id) ? $id : 0;
+
+        $entityManager = $this->container->get('em');
+        $usersRepository = $entityManager->getRepository('App\Models\Entity\User');
+        $user = $usersRepository->find($id);
+
+        $query = $entityManager->createQuery("
+            SELECT 
+                p.id,
+                p.title,
+                p.description,
+                CONCAT('R$', p.price) AS price,
+                CONCAT('http://img.rankforms.com/ssc/', p.id, '_', i.id, '.jpg') AS image
+            FROM 
+                App\Models\Entity\Image i
+                JOIN i.product p
+                JOIN p.user u
+            WHERE
+                u.id = $id
+                AND i.main = 1
+        ");
+        $favorites = $query->getResult();
+
+        $return = $response->withJson($favorites, 200)
+            ->withHeader('Content-type', 'application/json');
+        return $return;
+    }
+
+    /**
      * Listagem vendedores
      * @param [type] $request
      * @param [type] $response

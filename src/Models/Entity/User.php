@@ -70,17 +70,9 @@ class User
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ManyToMany(targetEntity="App\Models\Entity\Product", inversedBy="user")
-     * @JoinTable(name="favorite",
-     *   joinColumns={
-     *     @JoinColumn(name="user_id", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @JoinColumn(name="product_id", referencedColumnName="id")
-     *   }
-     * )
+     * @ManyToMany(targetEntity="App\Models\Entity\Product", mappedBy="user")
      */
-    public $favorite;
+    public $product;
 
     /**
      * @var \DateTime|null
@@ -187,6 +179,16 @@ class User
         $this->indication = $indication;
 
         return $this;
+    }
+
+    /**
+     * Get the value of products favorites
+     *
+     * @return  \Doctrine\Common\Collections\Collection
+     */ 
+    public function getProduct()
+    {
+        return $this->product;
     }
 
     /**

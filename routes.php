@@ -65,13 +65,21 @@ $app->group('/v1', function () {
         $this->delete('/{id:[0-9]+}', '\App\v1\Controllers\ImageController:deleteImage');
     });
 
+    $this->group('/messages', function () {
+        $this->get('/user/{user_id:[0-9]+}', '\App\v1\Controllers\MessageController:listMessage');
+        $this->get('/conversation/user/{user_id:[0-9]+}/{self_id:[0-9]+}', '\App\v1\Controllers\MessageController:listConversation');
+        $this->post('', '\App\v1\Controllers\MessageController:createMessage');
+    });
+
     $this->group('/products', function () {
         $this->get('', '\App\v1\Controllers\ProductController:listProduct');
         $this->get('/{id:[0-9]+}', '\App\v1\Controllers\ProductController:viewProduct');
+        $this->get('/{id:[0-9]+}/user/{user_id:[0-9]+}', '\App\v1\Controllers\ProductController:viewProduct');
         $this->get('/user/{user_id:[0-9]+}', '\App\v1\Controllers\ProductController:listProductByUser');
         $this->get('/category/{category_id:[0-9]+}', '\App\v1\Controllers\ProductController:listProductByMainCategory');
         $this->post('', '\App\v1\Controllers\ProductController:createProduct');
         $this->patch('/{id:[0-9]+}', '\App\v1\Controllers\ProductController:updateProduct');
+        $this->put('/{id:[0-9]+}/user/{user_id:[0-9]+}', '\App\v1\Controllers\ProductController:favoriteProduct');
     });
 
     $this->group('/tags', function () {
@@ -92,6 +100,7 @@ $app->group('/v1', function () {
     $this->group('/users', function () {
         $this->get('', '\App\v1\Controllers\UserController:listUser');
         $this->get('/sellers', '\App\v1\Controllers\UserController:listSellers');
+        $this->get('/favorites/user/{id:[0-9]+}', '\App\v1\Controllers\UserController:listFavorites');
         $this->get('/{id:[0-9]+}', '\App\v1\Controllers\UserController:viewUser');
         $this->patch('/{id:[0-9]+}', '\App\v1\Controllers\UserController:updateUser');
         $this->delete('/{id:[0-9]+}', '\App\v1\Controllers\UserController:deleteUser');

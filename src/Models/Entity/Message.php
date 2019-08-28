@@ -54,11 +54,18 @@ class Message
     public $recipient;
 
     /**
+     * @var int|null
+     *
+     * @Column(name="readed", type="integer", nullable=true)
+     */
+    public $readed;
+
+    /**
      * @var \DateTime|null
      *
-     * @Column(name="register", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     * @Column(name="register", type="datetime")
      */
-    public $register = 'CURRENT_TIMESTAMP';
+    public $register;
 
     /**
      * @var \DateTime|null
@@ -67,4 +74,95 @@ class Message
      */
     public $exclusion;
 
+    /**
+     * Set the value of sender
+     *
+     * @param  \App\Models\Entity\User  $sender
+     *
+     * @return  self
+     */ 
+    public function setSender(\App\Models\Entity\User $sender)
+    {
+        $this->sender = $sender;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of recipient
+     *
+     * @param  \App\Models\Entity\User  $recipient
+     *
+     * @return  self
+     */ 
+    public function setRecipient(\App\Models\Entity\User $recipient)
+    {
+        $this->recipient = $recipient;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of message
+     *
+     * @param  string|null  $message
+     *
+     * @return  self
+     */
+    public function setMessage($message)
+    {
+        $this->message = $message;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of read
+     *
+     * @param  integer|null  $read
+     *
+     * @return  self
+     */
+    public function setReaded($readed)
+    {
+        $this->readed = $readed;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of register
+     *
+     * @param  datetime  $register
+     *
+     * @return  self
+     */
+    public function setRegister($register)
+    {
+        $this->register = $register;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of type
+     *
+     * @param  int  $type
+     *
+     * @return  self
+     */
+    public function setType(int $type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return App\Models\Entity\User
+     */
+    public function getValues()
+    {
+        return get_object_vars($this);
+    }
 }

@@ -151,7 +151,15 @@ class Product
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ManyToMany(targetEntity="App\Models\Entity\User", mappedBy="product")
+     * @ManyToMany(targetEntity="App\Models\Entity\User", inversedBy="product")
+     * @JoinTable(name="favorite",
+     *   joinColumns={
+     *     @JoinColumn(name="product_id", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @JoinColumn(name="user_id", referencedColumnName="id")
+     *   }
+     * )
      */
     public $user;
 
@@ -401,6 +409,16 @@ class Product
 
         return $this;
     }*/
+
+    /**
+     * Get the value of user
+     *
+     * @return  \Doctrine\Common\Collections\Collection
+     */ 
+    public function getUser()
+    {
+        return $this->user;
+    }
 
     /**
      * Get the value of attribute
