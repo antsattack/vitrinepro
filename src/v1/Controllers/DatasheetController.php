@@ -68,7 +68,7 @@ class DatasheetController {
             if ($item['unit']=="color"){
                 $datasheets[$i]['values'] = $colors;
             } else {
-                $datasheets[$i]['values'] = explode(",",$item['values']);
+                $datasheets[$i]['values'] = explode(";",$item['values']);
             }
             $i++;
         }
