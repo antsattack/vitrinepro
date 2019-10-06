@@ -164,6 +164,13 @@ class Product
     public $user;
 
     /**
+     * @var string|null
+     *
+     * @Column(name="other_brand", type="string", length=255, nullable=true)
+     */
+    public $other_brand;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -277,6 +284,21 @@ class Product
     public function setBrand(\App\Models\Entity\Brand $brand)
     {
         $this->brand = $brand;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of other_brand
+     *
+     * @param  string|null  $other_brand
+     *
+     * @return  self
+     */ 
+    public function setOtherBrand($other_brand)
+    {
+        
+        $this->other_brand = $other_brand;
 
         return $this;
     }
