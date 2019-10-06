@@ -422,7 +422,7 @@ class ProductController {
                 $product->setCategory($category);
             }
 
-            if ($params->brand >= 0) {
+            if ($params->brand > 0) {
                 //$brand = (new Brand())->setId($params->brand);
                 $brand = $entityManager->find('App\Models\Entity\Brand', $params->brand);
                 $product->setBrand($brand);
