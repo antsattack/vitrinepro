@@ -434,9 +434,9 @@ class ProductController {
                 $product->setBrand($brand);
             }
 
-            if (strlen($params->other_brand)) {
+            //if (strlen($params->other_brand)) {
                 $product->setOtherBrand($params->other_brand);
-            }
+            //}
 
             if (strlen($params->model)) {
                 $product->setModel($params->model);
