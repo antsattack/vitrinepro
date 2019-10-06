@@ -99,6 +99,7 @@ class ProductController {
                 c.id AS category,
                 pa.id AS parent_category,
                 b.id AS brand,
+                p.other_brand AS other_brand,
                 p.description AS description,
                 p.model AS model,
                 p.price AS price,
@@ -130,6 +131,7 @@ class ProductController {
             $products[$i]['image'] = $item['image'];
             $products[$i]['description'] = $item['description'];
             $products[$i]['brand'] = $item['brand'];
+            $products[$i]['other_brand'] = $item['other_brand'];
             $products[$i]['model'] = $item['model'];
             $products[$i]['price'] = $item['price'];
             $products[$i]['new'] = $item['new'];
