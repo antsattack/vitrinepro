@@ -264,6 +264,7 @@ class ProductController {
         $prdObj->new = $product->new;
         $prdObj->quantity = $product->quantity;
         $prdObj->brand = $product->brand->id;
+        $prdObj->other_brand = $product->other_brand;
         $prdObj->category = $product->category->id;
         $prdObj->currency = $product->currency->id;
         $prdObj->seller = $product->seller->id;
