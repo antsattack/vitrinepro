@@ -151,6 +151,26 @@ class ProductController {
             foreach($tags AS $tag) $tagsList[] = $tag["id"];
 
             $products[$i]['tag'] = $tagsList;
+
+            $query = $entityManager->createQuery("
+            SELECT 
+                d.attribute AS id,
+                d.value
+            FROM 
+                App\Models\Entity\Datasheet d
+            WHERE
+                d.product = $product_id
+            ");
+            $datasheet = $query->getResult();
+            $datasheetList = array();
+            foreach($datasheet AS $item) {
+                $datasheetList[] = array(
+                    "id" => (int) $item["id"],
+                    "value" => $item["value"]
+                );
+            }
+            $products[$i]['datasheet'] = $datasheetList;
+
             $i++;
         }
 
