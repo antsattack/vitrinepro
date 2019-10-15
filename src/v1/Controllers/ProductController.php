@@ -154,7 +154,7 @@ class ProductController {
 
             $query = $entityManager->createQuery("
             SELECT 
-                a.is AS id,
+                a.id AS id,
                 d.value
             FROM 
                 App\Models\Entity\Datasheet d
