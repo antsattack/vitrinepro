@@ -97,16 +97,12 @@ class DatasheetController {
                 a.id AS id,
                 a.name AS name,
                 a.description AS values,
-                a.unit AS unit,
-                aa.value AS value
+                a.unit AS unit
             FROM 
                 App\Models\Entity\Product p
-                JOIN p.attribute aa
-                JOIN p.category c
-                JOIN c.attribute a
+                JOIN p.attribute a
             WHERE 
                 p.id = $product_id
-                AND a.category = p.category
             ORDER BY
                 a.name
         ";
