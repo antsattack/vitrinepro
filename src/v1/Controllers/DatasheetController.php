@@ -105,6 +105,8 @@ class DatasheetController {
                 JOIN p.attribute a
             WHERE 
                 p.id = $product_id
+            GROUP BY
+                a.id
             ORDER BY
                 a.name
         ";
