@@ -98,10 +98,9 @@ class DatasheetController {
                 a.name AS name,
                 a.description AS values,
                 a.unit AS unit,
-                d.value AS value
+                aa.value AS value
             FROM 
                 App\Models\Entity\Product p
-                JOIN p.datasheet d
                 JOIN p.attribute aa
                 JOIN p.category c
                 JOIN c.attribute a
