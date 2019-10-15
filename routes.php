@@ -52,6 +52,7 @@ $app->group('/v1', function () {
 
     $this->group('/datasheets', function () {
         $this->get('/category/{category_id:[0-9]+}', '\App\v1\Controllers\DatasheetController:listDatasheetByCategory');
+        $this->get('/product/{product_id:[0-9]+}', '\App\v1\Controllers\DatasheetController:listDatasheetByProduct');
     });
 
     $this->group('/getuserbyemail', function () {

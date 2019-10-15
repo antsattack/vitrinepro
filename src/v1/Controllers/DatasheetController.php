@@ -77,4 +77,58 @@ class DatasheetController {
             ->withHeader('Content-type', 'application/json');
         return $return;
     }
+
+    /**
+     * Listagem
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return Response
+     */
+    public function listDatasheetByProduct($request, $response, $args) {
+        
+        $product_id = (int) $args['product_id'];
+        $product_id = ($product_id) ? $product_id : 0;
+
+        $entityManager = $this->container->get('em');
+        
+        $dql = "
+            SELECT 
+                a.id AS id,
+                a.name AS name,
+                a.description AS values,
+                a.unit AS unit,
+                d.value AS value
+            FROM 
+                App\Models\Entity\Attribute a
+                JOIN datasheet d
+                JOIN d.product p
+            WHERE 
+                p.id = $product_id
+                AND a.category = p.category
+            ORDER BY
+                a.name
+        ";
+        $query = $entityManager->createQuery($dql);
+        $datasheets_temp = $query->getResult();
+
+        $datasheets = [];
+
+        $i = 0;
+        foreach($datasheets_temp AS $item){
+            $datasheets[$i]['id'] = (int) $item['id'];
+            $datasheets[$i]['name'] = $item['name'];
+            if ($item['unit']=="color"){
+                $datasheets[$i]['values'] = $colors;
+            } else {
+                $datasheets[$i]['values'] = explode(";",$item['values']);
+            }
+            $datasheets[$i]['value'] = $item['value'];
+            $i++;
+        }
+
+        $return = $response->withJson($datasheets, 200)
+            ->withHeader('Content-type', 'application/json');
+        return $return;
+    }
 }
