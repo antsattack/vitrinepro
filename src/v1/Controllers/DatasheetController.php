@@ -97,9 +97,11 @@ class DatasheetController {
                 a.id AS id,
                 a.name AS name,
                 a.description AS values,
-                a.unit AS unit
+                a.unit AS unit,
+                d.value AS value
             FROM 
-                App\Models\Entity\Product p
+                App\Models\Entity\Datasheet d
+                JOIN d.product p
                 JOIN p.attribute a
             WHERE 
                 p.id = $product_id
