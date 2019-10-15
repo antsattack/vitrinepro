@@ -154,10 +154,11 @@ class ProductController {
 
             $query = $entityManager->createQuery("
             SELECT 
-                d.attribute AS id,
+                a.is AS id,
                 d.value
             FROM 
                 App\Models\Entity\Datasheet d
+                JOIN d.attribute a
             WHERE
                 d.product = $product_id
             ");
@@ -342,10 +343,11 @@ class ProductController {
 
         $query = $entityManager->createQuery("
             SELECT 
-                d.attribute AS id,
+                a.id AS id,
                 d.value
             FROM 
                 App\Models\Entity\Datasheet d
+                JOIN d.attribute a
             WHERE
                 d.product = $product_id
         ");
@@ -501,7 +503,7 @@ class ProductController {
             $entityManager->flush();
 
             foreach($params->datasheet AS $datasheet){
-                $entityDatasheet = $entityManager->find('App\Models\Entity\Datasheet', array(
+                $entityDatasheet = $entityManager->find('App\Models\Entity\Datasheet2', array(
                     "product" => $product_id,
                     "attribute" => $datasheet["id"]
                 ));
@@ -563,7 +565,7 @@ class ProductController {
             $entityManager->flush();
 
             foreach($params->datasheet AS $datasheet){
-                $entityDatasheet = $entityManager->find('App\Models\Entity\Datasheet', array(
+                $entityDatasheet = $entityManager->find('App\Models\Entity\Datasheet2', array(
                     "product" => $product_id,
                     "attribute" => $datasheet["id"]
                 ));
