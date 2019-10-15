@@ -11,9 +11,28 @@ namespace App\Models\Entity;
  */
 class Datasheet
 {
-    /** @Id @Column(name="product_id", type="string") */
+    /**
+     * @var \App\Models\Entity\Product
+     *
+     * @Id
+     * @GeneratedValue(strategy="NONE")
+     * @OneToOne(targetEntity="App\Models\Entity\Product")
+     * @JoinColumns({
+     *   @JoinColumn(name="product_id", referencedColumnName="id")
+     * })
+     */
     public $product;
-    /** @Id @Column(name="attribute_id", type="string") */
+
+    /**
+     * @var \App\Models\Entity\Attribute
+     *
+     * @Id
+     * @GeneratedValue(strategy="NONE")
+     * @OneToOne(targetEntity="App\Models\Entity\Attribute")
+     * @JoinColumns({
+     *   @JoinColumn(name="attribute_id", referencedColumnName="id")
+     * })
+     */
     public $attribute;
 
     /**
