@@ -102,7 +102,7 @@ class DatasheetController {
             FROM 
                 App\Models\Entity\Datasheet d
                 JOIN d.product p
-                JOIN p.attribute a
+                JOIN d.attribute a
             WHERE 
                 p.id = $product_id
             GROUP BY
