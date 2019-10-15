@@ -101,8 +101,8 @@ class DatasheetController {
                 d.value AS value
             FROM 
                 App\Models\Entity\Datasheet d
-                JOIN d.product p
-                JOIN d.attribute a
+                JOIN App\Models\Entity\Product p WITH p.id = d.product
+                JOIN App\Models\Entity\Attribute a WITH a.id = d.attribute
             WHERE 
                 p.id = $product_id
             GROUP BY
