@@ -38,6 +38,20 @@ class Datasheet
     /**
      * @var string|null
      *
+     * @Column(name="product_id", type="string", length=255, nullable=true)
+     */
+    public $product_id;
+
+    /**
+     * @var string|null
+     *
+     * @Column(name="attribute_id", type="string", length=255, nullable=true)
+     */
+    public $attribute_id;
+
+    /**
+     * @var string|null
+     *
      * @Column(name="value", type="string", length=255, nullable=true)
      */
     public $value;

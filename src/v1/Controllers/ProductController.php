@@ -346,7 +346,6 @@ class ProductController {
                 a.id AS id,
                 d.value
             FROM 
-                App\Models\Entity\Datasheet d
                 JOIN d.attribute a
             WHERE
                 d.product = $product_id
@@ -503,9 +502,9 @@ class ProductController {
             $entityManager->flush();
 
             foreach($params->datasheet AS $datasheet){
-                $entityDatasheet = $entityManager->find('App\Models\Entity\Datasheet2', array(
-                    "product" => $product_id,
-                    "attribute" => $datasheet["id"]
+                $entityDatasheet = $entityManager->find('App\Models\Entity\Datasheet', array(
+                    "product_id" => $product_id,
+                    "attribute_id" => $datasheet["id"]
                 ));
                 $entityDatasheet->setValue($datasheet["value"]);
                 $entityManager->persist($entityDatasheet);
@@ -566,8 +565,8 @@ class ProductController {
 
             foreach($params->datasheet AS $datasheet){
                 $entityDatasheet = $entityManager->find('App\Models\Entity\Datasheet2', array(
-                    "product" => $product_id,
-                    "attribute" => $datasheet["id"]
+                    "product_id" => $product_id,
+                    "attribute_id" => $datasheet["id"]
                 ));
                 $entityDatasheet->setValue($datasheet["value"]);
                 $entityManager->persist($entityDatasheet);
