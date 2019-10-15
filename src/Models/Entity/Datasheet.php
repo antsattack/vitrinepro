@@ -11,18 +11,9 @@ namespace App\Models\Entity;
  */
 class Datasheet
 {
-    /**
-     * @var string|null
-     *
-     * @Column(name="product_id", type="string", length=255, nullable=true)
-     */
+    /** @Id @Column(name="product_id", type="string") */
     public $product;
-
-    /**
-     * @var string|null
-     *
-     * @Column(name="attribute_id", type="string", length=255, nullable=true)
-     */
+    /** @Id @Column(name="attribute_id", type="string") */
     public $attribute;
 
     /**
