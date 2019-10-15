@@ -131,7 +131,7 @@ class Product
      *   }
      * )
      */
-    public $attribute;
+    //public $attribute;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
