@@ -82,6 +82,23 @@ class User
     public $exclusion;
 
     /**
+     * @var int
+     *
+     * @Column(name="plan", type="integer", nullable=false)
+     */
+    public $plan;
+
+    /**
+     * Get the value of plan
+     *
+     * @return  int
+     */
+    public function getPlan()
+    {
+        return $this->plan;
+    }
+
+    /**
      * Get the value of id
      *
      * @return  int

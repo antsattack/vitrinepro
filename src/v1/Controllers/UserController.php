@@ -38,7 +38,7 @@ class UserController
     {
         $entityManager = $this->container->get('em');
         $usersRepository = $entityManager->getRepository('App\Models\Entity\User');
-        $users = $usersRepository->findAll();
+        $users = $usersRepository->findBy(array('plan'=> '1'));
         $return = $response->withJson($users, 200)
             ->withHeader('Content-type', 'application/json');
         return $return;
