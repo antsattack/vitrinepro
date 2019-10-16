@@ -207,7 +207,7 @@ $app->add(new \Slim\Middleware\JwtAuthentication([
     "header" => "X-Token",
     "path" => "/",
     "relaxed" => ["localhost", "127.0.0.1", "localhost:8100", "ec2-54-94-243-17.sa-east-1.compute.amazonaws.com"],
-    "passthrough" => ["/auth", "/v1/auth", "/v1/usercreate", "/v1/categories", "/v1/products", "/v1/users/sellers"],
+    "passthrough" => ["/auth", "/v1/auth", "/v1/usercreate", "/v1/categories", "/v1/products", "/v1/users/sellers", "/v1/products/user/"],
     "realm" => "Protected",
     "secret" => $container['secretkey'],
 ]));
