@@ -119,7 +119,7 @@ class MessageController
                 $temp["id"] = $items[$i]["idsender"];
                 $temp["name"] = $items[$i]["sender"];
                 $temp["register"] = $diff_text;
-                $temp["image"] = "http://img.rankforms.com/ssc/".$items[$i]["idsender"].".jpg";
+                $temp["image"] = "https://s3-sa-east-1.amazonaws.com/img.rankforms.com/ssc/".$items[$i]["idsender"].".jpg";
                 // $temp["badge"] = $list_badge[$items[$i]["idsender"]];
                 $badge ++;
             }
@@ -128,7 +128,7 @@ class MessageController
                 $temp["id"] = $items[$i]["idrecipient"];
                 $temp["name"] = $items[$i]["recipient"];
                 $temp["register"] = $diff_text;
-                $temp["image"] = "http://img.rankforms.com/ssc/".$items[$i]["idrecipient"].".jpg";
+                $temp["image"] = "https://s3-sa-east-1.amazonaws.com/img.rankforms.com/ssc/".$items[$i]["idrecipient"].".jpg";
                 // $temp["badge"] = $list_badge[$items[$i]["idrecipient"]];
                 $badge ++;
             }
@@ -236,7 +236,7 @@ class MessageController
             $temp["message"] = nl2br($items[$i]["message"]);
             $temp["register"] = $items[$i]["register"];
             $temp["register"] = $diff_text;
-            $temp["image"] = "http://img.rankforms.com/ssc/".$items[$i]["idsender"].".jpg";
+            $temp["image"] = "https://s3-sa-east-1.amazonaws.com/img.rankforms.com/ssc/".$items[$i]["idsender"].".jpg";
 
             if ($self_id === $items[$i]["idsender"]){
                 $temp["mine"] = true;

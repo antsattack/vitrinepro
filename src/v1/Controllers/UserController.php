@@ -66,7 +66,7 @@ class UserController
                 p.title,
                 p.description,
                 CONCAT('R$', p.price) AS price,
-                CONCAT('http://img.rankforms.com/ssc/', p.id, '_', i.id, '.jpg') AS image
+                CONCAT('https://s3-sa-east-1.amazonaws.com/img.rankforms.com/ssc/', p.id, '_', i.id, '.jpg') AS image
             FROM 
                 App\Models\Entity\Image i
                 JOIN i.product p

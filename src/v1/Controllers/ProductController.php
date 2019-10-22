@@ -337,7 +337,7 @@ class ProductController {
         $imgs = $query->getResult();
         $imgsList = array();
         foreach($imgs AS $item) {
-            $imgsList[] = "http://img.rankforms.com/ssc/".$product_id."_".$item["img_id"].".jpg";
+            $imgsList[] = "https://s3-sa-east-1.amazonaws.com/img.rankforms.com/ssc/".$product_id."_".$item["img_id"].".jpg";
         }
 
         $query = $entityManager->createQuery("

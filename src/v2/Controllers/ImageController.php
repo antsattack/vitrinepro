@@ -73,7 +73,7 @@ class ImageController
             $key_image = "image_" . $item['image_id'];
             $images[$i]['id'] = (int) $item['image_id'];
             $images[$i]['main'] = (int) $item['main'];
-            $images[$i]['url'] = "http://img.rankforms.com/" . $item['prefix'] . "/" . $item['product_id'] . "_" . $item['image_id'] . ".jpg";
+            $images[$i]['url'] = "https://s3-sa-east-1.amazonaws.com/img.rankforms.com/" . $item['prefix'] . "/" . $item['product_id'] . "_" . $item['image_id'] . ".jpg";
             $i++;
         }
 
@@ -232,7 +232,7 @@ class ImageController
 
             unlink($reduced);
             //}
-            $url_final = "http://img.rankforms.com/" . $name;
+            $url_final = "https://s3-sa-east-1.amazonaws.com/img.rankforms.com/" . $name;
             $ret = [
                 "id" => $novoId,
                 "url" => $url_final,
@@ -330,7 +330,7 @@ class ImageController
 
             unlink($reduced);
             //}
-            $url_final = "http://img.rankforms.com/" . $name;
+            $url_final = "https://s3-sa-east-1.amazonaws.com/img.rankforms.com/" . $name;
             $ret = [
                 "url" => $url_final
             ];
@@ -484,7 +484,7 @@ class ImageController
             $key_image = "image_" . $item['image_id'];
             $images[$i]['id'] = (int) $item['image_id'];
             $images[$i]['main'] = (int) $item['main'];
-            $images[$i]['url'] = "http://img.rankforms.com/" . $item['prefix'] . "/" . $item['product_id'] . "_" . $item['image_id'] . ".jpg";
+            $images[$i]['url'] = "https://s3-sa-east-1.amazonaws.com/img.rankforms.com/" . $item['prefix'] . "/" . $item['product_id'] . "_" . $item['image_id'] . ".jpg";
             $i++;
         }
 
