@@ -113,6 +113,29 @@ class DatasheetController {
         $query = $entityManager->createQuery($dql);
         $datasheets_temp = $query->getResult();
 
+        if (count($datasheets_temp)==0){
+            $dql = "
+                SELECT 
+                    a.id AS id,
+                    a.name AS name,
+                    a.description AS values,
+                    a.unit AS unit,
+                    d.value AS value
+                FROM 
+                    App\Models\Entity\Product p
+                    JOIN App\Models\Entity\Datasheet d WITH d.product = p.id
+                    JOIN App\Models\Entity\Attribute a WITH a.category = p.category
+                WHERE 
+                    p.id = $product_id
+                GROUP BY
+                    a.id
+                ORDER BY
+                    a.name
+            ";
+            $query = $entityManager->createQuery($dql);
+            $datasheets_temp = $query->getResult();
+        }
+
         $datasheets = [];
 
         $i = 0;
