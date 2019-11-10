@@ -100,9 +100,9 @@ class DatasheetController {
                 a.unit AS unit,
                 d.value AS value
             FROM 
-                App\Models\Entity\Datasheet d
-                LEFT JOIN App\Models\Entity\Product p WITH p.id = d.product
-                LEFT JOIN App\Models\Entity\Attribute a WITH a.id = d.attribute
+                App\Models\Entity\Product p
+                LEFT JOIN App\Models\Entity\Datasheet d WITH d.product = p.id
+                LEFT JOIN App\Models\Entity\Attribute a WITH a.category = p.category
             WHERE 
                 p.id = $product_id
             GROUP BY
