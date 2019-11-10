@@ -113,7 +113,7 @@ class DatasheetController {
         $query = $entityManager->createQuery($dql);
         $datasheets_temp = $query->getResult();
 
-        if (count($datasheets_temp)==0){
+        if (count($datasheets_temp)<1){
             $dql = "
                 SELECT 
                     a.id AS id,
@@ -123,8 +123,8 @@ class DatasheetController {
                     d.value AS value
                 FROM 
                     App\Models\Entity\Product p
-                    JOIN App\Models\Entity\Datasheet d WITH d.product = p.id
-                    JOIN App\Models\Entity\Attribute a WITH a.category = p.category
+                    LEFT JOIN App\Models\Entity\Datasheet d WITH d.product = p.id
+                    LEFT JOIN App\Models\Entity\Attribute a WITH a.category = p.category
                 WHERE 
                     p.id = $product_id
                 GROUP BY
