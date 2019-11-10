@@ -486,7 +486,7 @@ class ProductController {
                 }
             }
 
-            if (count($params->datasheet)) {
+            if (count($params->datasheet) || is_array($params->datasheet)) {
                 $listAttrs = array();
                 foreach($params->datasheet AS $datasheet){
                     $listAttrs[] = $entityManager->find('App\Models\Entity\Attribute', $datasheet['id']);
