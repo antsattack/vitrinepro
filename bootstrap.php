@@ -206,8 +206,8 @@ $app->add(new \Slim\Middleware\JwtAuthentication([
     "regexp" => "/(.*)/",
     "header" => "X-Token",
     "path" => "/",
-    "relaxed" => ["localhost", "127.0.0.1", "localhost:8100", "ec2-54-94-243-17.sa-east-1.compute.amazonaws.com"],
-    "passthrough" => ["/auth", "/v1/auth", "/v1/usercreate", "/v1/categories", "/v1/products", "/v1/users/sellers", "/v1/products/user/"],
+    "relaxed" => ["localhost", "127.0.0.1", "localhost:8080", "localhost:8100", "ec2-54-94-243-17.sa-east-1.compute.amazonaws.com"],
+    "passthrough" => ["/auth", "/v1/auth", "/v1/usercreate", "/v1/categories", "/v1/products", "/v1/users/sellers", "/v1/products/user/", "/v1/products/datasheets/"],
     "realm" => "Protected",
     "secret" => $container['secretkey'],
 ]));
@@ -215,5 +215,5 @@ $app->add(new \Slim\Middleware\JwtAuthentication([
 /**
  * Proxys confiáveis
  */
-$trustedProxies = ['0.0.0.0', '127.0.0.1', 'localhost', 'localhost:8100'];
+$trustedProxies = ['0.0.0.0', '127.0.0.1', 'localhost', 'localhost:8080', 'localhost:8100'];
 $app->add(new RKA\Middleware\SchemeAndHost($trustedProxies));
