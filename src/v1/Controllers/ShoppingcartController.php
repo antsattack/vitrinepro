@@ -52,12 +52,10 @@ class ShoppingcartController {
                 JOIN s.product p
                 JOIN s.transaction t
                 JOIN t.transactionstatus a
-                LEFT JOIN App\Models\Entity\Image i
+                LEFT JOIN App\Models\Entity\Image i ON i.product = s.product AND i.main = 1
             WHERE 
                 u.id = $user_id
                 AND a.id = 1
-                AND i.product = s.product
-                AND i.main = 1
         ";
         $query = $entityManager->createQuery($dql);
         $items_temp = $query->getResult();
