@@ -64,9 +64,8 @@ class ShoppingcartController {
                 p.price AS price
                 p.description AS description
             FROM 
-                App\Models\Entity\Shoppingcart s
-                JOIN s.user u
-                JOIN s.product p
+                App\Models\Entity\Product p
+            LIMIT 5
         ";
         $query = $entityManager->createQuery($dql);
         $items_temp = $query->getResult();
