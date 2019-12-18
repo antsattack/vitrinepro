@@ -39,7 +39,7 @@ class ShoppingcartController {
 
         $entityManager = $this->container->get('em');
 
-        $dql2 = "
+        /*$dql2 = "
             SELECT 
                 p.id AS product_id
                 p.title AS title
@@ -56,15 +56,15 @@ class ShoppingcartController {
                 AND a.id = 1
             ORDER BY
                 s.register
-        ";
+        ";*/
         $dql = "
             SELECT 
-                p.id AS product_id
-                p.title AS title
-                p.price AS price
-                p.description AS description
+                w.id AS product_id
+                w.title AS title
+                w.price AS price
+                w.description AS description
             FROM 
-                App\Models\Entity\Product p
+                App\Models\Entity\Product w
             LIMIT 5
         ";
         $query = $entityManager->createQuery($dql);
