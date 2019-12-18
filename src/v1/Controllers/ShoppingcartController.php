@@ -57,6 +57,7 @@ class ShoppingcartController {
                 u.id = $user_id
                 AND a.id = 1
                 AND i.product = s.product
+                AND i.main = 1
         ";
         $query = $entityManager->createQuery($dql);
         $items_temp = $query->getResult();
