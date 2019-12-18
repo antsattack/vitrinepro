@@ -49,10 +49,10 @@ class ShoppingcartController {
             FROM 
                 App\Models\Entity\Shoppingcart s
                 JOIN s.user u
-                LEFT JOIN App\Models\Entity\Image i
                 JOIN s.product p
                 JOIN s.transaction t
                 JOIN t.transactionstatus a
+                JOIN App\Models\Entity\Image i
             WHERE 
                 u.id = $user_id
                 AND a.id = 1
