@@ -55,7 +55,7 @@ class ShoppingcartController {
                 u.id = $user_id
                 AND a.id = 1
             ORDER BY
-                s.register
+                s.id
         ";
         $query = $entityManager->createQuery($dql);
         $items_temp = $query->getResult();
