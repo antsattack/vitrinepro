@@ -69,6 +69,7 @@ class ShoppingcartController {
             $items[$i]['title'] = $item['title'];
             $items[$i]['price'] = $item['price'];
             $items[$i]['description'] = $item['description'];
+            $items[$i]['image'] = $item['image'];
             $i++;
         }
 
