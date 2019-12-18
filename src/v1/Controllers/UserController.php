@@ -68,12 +68,11 @@ class UserController
                 CONCAT('R$', p.price) AS price,
                 CONCAT('https://s3-sa-east-1.amazonaws.com/img.rankforms.com/ssc/', p.id, '_', i.id, '.jpg') AS image
             FROM 
-                App\Models\Entity\Image i
-                JOIN i.product p
+                App\Models\Entity\Product p
                 JOIN p.user u
+                LEFT JOIN App\Models\Entity\Image i WITH i.product = p AND i.main = 1
             WHERE
                 u.id = $id
-                AND i.main = 1
         ");
         $favorites = $query->getResult();
 
