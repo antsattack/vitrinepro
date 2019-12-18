@@ -63,6 +63,7 @@ class ShoppingcartController {
             FROM 
                 App\Models\Entity\Shoppingcart s
                 JOIN s.product p
+                JOIN s.user u
         ";
         $query = $entityManager->createQuery($dql);
         $items_temp = $query->getResult();
