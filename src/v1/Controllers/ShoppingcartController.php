@@ -41,7 +41,7 @@ class ShoppingcartController {
 
         $dql = "
             SELECT 
-                p.id AS product_id,
+                p.id AS id,
                 p.title AS title,
                 p.price AS price,
                 p.description AS description
