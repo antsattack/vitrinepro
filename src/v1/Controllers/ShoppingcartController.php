@@ -59,13 +59,9 @@ class ShoppingcartController {
         ";*/
         $dql = "
             SELECT 
-                w.id AS product_id
-                w.title AS title
-                w.price AS price
-                w.description AS description
+                w.id
             FROM 
                 App\Models\Entity\Product w
-            LIMIT 5
         ";
         $query = $entityManager->createQuery($dql);
         $items_temp = $query->getResult();
