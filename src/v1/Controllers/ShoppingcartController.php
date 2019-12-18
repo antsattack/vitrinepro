@@ -62,7 +62,7 @@ class ShoppingcartController {
                 p.id
             FROM 
                 App\Models\Entity\Shoppingcart s
-                JOIN product p
+                JOIN s.product p
         ";
         $query = $entityManager->createQuery($dql);
         $items_temp = $query->getResult();
