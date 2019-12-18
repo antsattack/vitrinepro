@@ -49,13 +49,14 @@ class ShoppingcartController {
             FROM 
                 App\Models\Entity\Shoppingcart s
                 JOIN s.user u
-                JOIN App\Models\Entity\Image i ON i.product = s.product
+                JOIN App\Models\Entity\Image i
                 JOIN s.product p
                 JOIN s.transaction t
                 JOIN t.transactionstatus a
             WHERE 
                 u.id = $user_id
                 AND a.id = 1
+                AND i.product = s.product
         ";
         $query = $entityManager->createQuery($dql);
         $items_temp = $query->getResult();
