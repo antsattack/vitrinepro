@@ -43,8 +43,9 @@ class ShoppingcartController {
             SELECT 
                 p.id AS id,
                 p.title AS title,
-                p.price AS price,
-                p.description AS description
+                p.description AS description,
+                CONCAT('R$', p.price) AS price,
+                CONCAT('https://s3-sa-east-1.amazonaws.com/img.rankforms.com/ssc/', p.id, '_', i.id, '.jpg') AS image
             FROM 
                 App\Models\Entity\Shoppingcart s
                 JOIN s.user u
