@@ -39,9 +39,7 @@ class ShoppingcartController {
 
         $entityManager = $this->container->get('em');
 
-        $where = "p.id = ".$user_id." AND c.id != ".$user_id;
-
-        $dql = "
+        $dql2 = "
             SELECT 
                 p.id AS product_id
                 p.title AS title
@@ -58,6 +56,17 @@ class ShoppingcartController {
                 AND a.id = 1
             ORDER BY
                 s.register
+        ";
+        $dql = "
+            SELECT 
+                p.id AS product_id
+                p.title AS title
+                p.price AS price
+                p.description AS description
+            FROM 
+                App\Models\Entity\Shoppingcart s
+                JOIN s.user u
+                JOIN s.product p
         ";
         $query = $entityManager->createQuery($dql);
         $items_temp = $query->getResult();
