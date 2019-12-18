@@ -59,7 +59,10 @@ class ShoppingcartController {
         ";*/
         $dql = "
             SELECT 
-                p.id
+                p.id AS id
+                p.title AS title
+                p.price AS price
+                p.description AS description
             FROM 
                 App\Models\Entity\Shoppingcart s
                 JOIN s.product p
