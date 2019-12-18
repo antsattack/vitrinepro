@@ -22,13 +22,6 @@ class Transaction
     public $id;
 
     /**
-     * @var \DateTime|null
-     *
-     * @Column(name="register", type="string", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
-     */
-    public $register = 'CURRENT_TIMESTAMP';
-
-    /**
      * @var \App\Models\Entity\Transactionformat
      *
      * @ManyToOne(targetEntity="App\Models\Entity\Transactionformat")

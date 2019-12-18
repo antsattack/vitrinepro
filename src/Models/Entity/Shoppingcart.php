@@ -77,4 +77,11 @@ class Shoppingcart
     {
         return $this->transaction;
     }
+
+    /**
+     * @return App\Models\Entity\Shoppingcart
+     */
+    public function getValues() {
+        return get_object_vars($this);
+    }
 }

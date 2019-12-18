@@ -83,6 +83,10 @@ $app->group('/v1', function () {
         $this->put('/{id:[0-9]+}/user/{user_id:[0-9]+}', '\App\v1\Controllers\ProductController:favoriteProduct');
     });
 
+    $this->group('/shoppingcart', function () {
+        $this->get('/user/{user_id:[0-9]+}', '\App\v1\Controllers\ShoppingcartController:listShoppingcart');
+    });
+
     $this->group('/tags', function () {
         $this->get('/category/{category_id:[0-9]+}', '\App\v1\Controllers\TagController:listTagByCategory');
         $this->post('/category/{category_id:[0-9]+}', '\App\v1\Controllers\TagController:createTag');
